@@ -3,109 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canvas Node Editor</title>
+    <title>Node Graph</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: row;
-        }
-
-        #canvas-container {
-            flex: 2;
-            background-color: #f0f0f0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
         canvas {
-            border: 1px solid #ccc;
-        }
-
-        #sidebar {
-            flex: 1;
-            padding: 20px;
-        }
-
-        #addNodeButton {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 5px;
-            margin-bottom: 10px;
+            border: 1px solid #000;
         }
     </style>
 </head>
 <body>
-    <div id="canvas-container">
-        <canvas id="canvas" width="400" height="400"></canvas>
+    <canvas id="canvas" width="800" height="600"></canvas>
+    <div>
+        <input type="text" id="nodeName" placeholder="Node Name">
+        <input type="button" value="Add Node" onclick="addNode()">
+        <input type="button" value="Add Link" onclick="addLink()">
+        <input type="text" id="sourceNode" placeholder="Source Node">
+        <input type="text" id="targetNode" placeholder="Target Node">
+        <input type="button" value="Delete Node" onclick="deleteNode()">
     </div>
-    <div id="sidebar">
-        <button id="addNodeButton">Add Node</button>
-        <input type="text" id="nodeName1" placeholder="Node 1 Name">
-        <input type="text" id="nodeName2" placeholder="Node 2 Name">
-    </div>
+
     <script>
-        // JavaScript code to handle canvas and button actions goes here
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
-
-        // Array to store nodes and their positions
         const nodes = [];
+        const links = [];
 
-        // Event listener for the "Add Node" button
-        document.getElementById("addNodeButton").addEventListener("click", () => {
-            const x = Math.random() * canvas.width;
-            const y = Math.random() * canvas.height;
-            const nodeName1 = document.getElementById("nodeName1").value;
-            const nodeName2 = document.getElementById("nodeName2").value;
+        let selectedNode = null;
 
-            nodes.push({ x, y, nodeName1, nodeName2 });
-            drawNodes();
+        function addNode() {
+            const nodeName = document.getElementById("nodeName").value;
+            if (!nodeName) return;
+
+            const node = { x: 50, y: 50, name: nodeName };
+            nodes.push(node);
+            draw();
+        }
+
+        function addLink() {
+            const sourceNodeName = document.getElementById("sourceNode").value;
+            const targetNodeName = document.getElementById("targetNode").value;
+
+            if (!sourceNodeName || !targetNodeName) {
+                alert("Please enter both source and target node names.");
+                return;
+            }
+
+            // Check if the source and target nodes exist
+            const sourceNode = nodes.find(node => node.name === sourceNodeName);
+            const targetNode = nodes.find(node => node.name === targetNodeName);
+
+            if (!sourceNode || !targetNode) {
+                alert("Source and/or target node does not exist.");
+                return;
+            }
+
+            const link = { source: sourceNode.name, target: targetNode.name };
+            links.push(link);
+            draw();
+        }
+
+        function deleteNode() {
+            if (selectedNode) {
+                // Remove the selected node and associated links
+                nodes.splice(nodes.indexOf(selectedNode), 1);
+                links.splice(links.findIndex(link => link.source === selectedNode.name || link.target === selectedNode.name), 1);
+                selectedNode = null;
+                draw();
+            }
+        }
+
+        canvas.addEventListener("mousedown", function (e) {
+            const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+            const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+            // Check if a node is clicked
+            for (const node of nodes) {
+                const dx = node.x - mouseX;
+                const dy = node.y - mouseY;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+                if (distance < 20) {
+                    if (selectedNode === node) {
+                        // Toggle selection off
+                        selectedNode = null;
+                    } else {
+                        // Select the clicked node
+                        selectedNode = node;
+                    }
+                    break;
+                }
+            }
+
+            draw();
         });
 
-        // Function to draw nodes and their connections on the canvas
-        function drawNodes() {
+        canvas.addEventListener("mousemove", function (e) {
+            if (selectedNode) {
+                selectedNode.x = e.clientX - canvas.getBoundingClientRect().left;
+                selectedNode.y = e.clientY - canvas.getBoundingClientRect().top;
+                draw();
+            }
+        });
+
+        function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            nodes.forEach(node => {
+
+            // Draw links
+            for (const link of links) {
+                const sourceNode = nodes.find(node => node.name === link.source);
+                const targetNode = nodes.find(node => node.name === link.target);
+                if (sourceNode && targetNode) {
+                    ctx.beginPath();
+                    ctx.moveTo(sourceNode.x, sourceNode.y);
+                    ctx.lineTo(targetNode.x, targetNode.y);
+                    ctx.stroke();
+                }
+            }
+
+            // Draw nodes
+            for (const node of nodes) {
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
-                ctx.fillStyle = "#007bff";
+                ctx.fillStyle = selectedNode === node ? "red" : "blue";
                 ctx.fill();
-                ctx.closePath();
+                ctx.stroke();
 
+                ctx.fillStyle = "white";
                 ctx.font = "12px Arial";
-                ctx.fillStyle = "#fff";
-                ctx.fillText(node.nodeName1, node.x - 15, node.y - 25);
-                ctx.fillText(node.nodeName2, node.x - 15, node.y + 15);
-            });
-
-            // Draw connections between nodes
-            ctx.strokeStyle = "#007bff";
-            ctx.lineWidth = 2;
-            nodes.forEach(node => {
-                nodes.forEach(otherNode => {
-                    if (node !== otherNode) {
-                        ctx.beginPath();
-                        ctx.moveTo(node.x, node.y);
-                        ctx.lineTo(otherNode.x, otherNode.y);
-                        ctx.stroke();
-                        ctx.closePath();
-                    }
-                });
-            });
+                ctx.textAlign = "center";  // Center the text horizontally
+                ctx.textBaseline = "middle";  // Center the text vertically
+                ctx.fillText(node.name, node.x, node.y);
+            }
         }
+
+        draw();
     </script>
 </body>
 </html>
