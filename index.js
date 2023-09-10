@@ -1,4 +1,4 @@
-// index.js
+// script.js
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
@@ -7,13 +7,22 @@ const ctx = canvas.getContext("2d");
 const nodes = [];
 
 // Array to store links between nodes
-const links = [];
+let links = [];
+
+// Variable to keep track of the selected node
+let selectedNode = null;
 
 // Event listener for the "Add Node" button
 document.getElementById("addNodeButton").addEventListener("click", addNode);
 
 // Event listener for the "Link Nodes" button
 document.getElementById("linkNodesButton").addEventListener("click", linkNodes);
+
+// Event listener for the "Delete Node" button
+document.getElementById("deleteNodeButton").addEventListener("click", deleteSelectedNode);
+
+// Event listener for canvas click to select/deselect nodes
+canvas.addEventListener("click", selectNode);
 
 // Function to add a new node
 function addNode() {
@@ -40,6 +49,42 @@ function linkNodes() {
     }
 }
 
+// Function to select/deselect nodes on canvas click
+function selectNode(e) {
+    const mouseX = e.clientX - canvas.getBoundingClientRect().left;
+    const mouseY = e.clientY - canvas.getBoundingClientRect().top;
+
+    // Check if a node is clicked
+    for (const node of nodes) {
+        const dx = node.x - mouseX;
+        const dy = node.y - mouseY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        if (distance < 20) {
+            if (selectedNode === node) {
+                // Toggle selection off
+                selectedNode = null;
+            } else {
+                // Select the clicked node
+                selectedNode = node;
+            }
+            drawNodes();
+            break;
+        }
+    }
+}
+
+// Function to delete the selected node
+function deleteSelectedNode() {
+    if (selectedNode) {
+        // Remove the selected node and associated links
+        const index = nodes.indexOf(selectedNode);
+        nodes.splice(index, 1);
+        links = links.filter(link => link.node1 !== selectedNode && link.node2 !== selectedNode);
+        selectedNode = null;
+        drawNodes();
+    }
+}
+
 // Function to draw nodes and their connections on the canvas
 function drawNodes() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -47,7 +92,7 @@ function drawNodes() {
     nodes.forEach(node => {
         ctx.beginPath();
         ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
-        ctx.fillStyle = "#007bff";
+        ctx.fillStyle = selectedNode === node ? "red" : "#007bff";
         ctx.fill();
         ctx.closePath();
 
@@ -68,3 +113,6 @@ function drawNodes() {
         ctx.closePath();
     });
 }
+
+// Initial canvas drawing
+drawNodes();
