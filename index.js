@@ -13,7 +13,7 @@ function addRandomNode() {
 
     // Check if a node with the same name already exists
     if (nodes.some(node => node.name === nodeName)) {
-        alert("A node with the same name already exists.");
+        alert("A node with the same name already exists. Add a new node");
         return;
     }
 
