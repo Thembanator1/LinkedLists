@@ -16,12 +16,12 @@ This repository contains the source code for an educational tool designed to ass
 
 If you have any questions or need further information, please feel free to contact the project maintainers.
 
-**Backend and Testing:**
+**Backend and Testing:**<br>
 Cwenga Gcolotela<br>
 Kholofelo Lekala<br>
 Thembalami Msimango
 
-**Frontend:**
+**Frontend:**<br>
 Nonhlanhla Zwane<br>
 Lebohang Tseki<br>
 ALuzuko Mlomo
