@@ -14,7 +14,20 @@ This repository contains the source code for an educational tool designed to ass
 
 **Contact:**
 
-If you have any questions or need further information, please feel free to contact the project maintainers
+If you have any questions or need further information, please feel free to contact the project maintainers.
+
+**Backend and Testing:**
+Cwenga Gcolotela
+Kholofelo Lekala
+Thembalami Msimango
+
+**Frontend:**
+Nonhlanhla Zwane
+Lebohang Tseki
+ALuzuko Mlomo
+
+**Scrum Master:**
+Nonhlanhla Zwane
 
 **Acknowledgments:**
 
