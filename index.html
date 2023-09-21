@@ -1,27 +1,92 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Node Graph</title>
-    <style>
-        canvas {
-            border: 1px solid #000;
-        }
-    </style>
-</head>
-<body>
-    <canvas id="canvas" width="800" height="600"></canvas>
-    <div>
-        <input type="text" id="nodeName" placeholder="Node Name">
-        <input type="button" value="Add Node" onclick="addRandomNode()">
-        <input type="button" value="Add Link" onclick="addLink()">
-        <input type="text" id="sourceNode" placeholder="Source Node">
-        <input type="text" id="targetNode" placeholder="Target Node">
-        <input type="button" value="Delete Node" onclick="deleteNode()">
-    </div>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <!-- Include the external JavaScript file -->
-    <script src="index.js"></script>
-</body>
+		<link rel="icon" href="pointer.png"/>
+
+		<link rel="stylesheet" href="css/design.css" />
+		<link rel="stylesheet" href="css/responisve.css" />
+		<title>Linked List Practice Problems</title>
+	</head>
+	
+	<body>
+			
+		</div>
+
+		<header>
+			<div class="header-container">
+				<div id="settings-menu">
+					<i class="fas fa-bars"></i>
+				</div>
+				
+				<div>
+					<h1>Linked <span>List</span> Practice Probems</h1>
+				</div>
+				
+				<div id="theme-switcher">
+					<i class="fas fa-adjust"></i>
+				</div>
+			</div>
+			<div class="gradient-border"></div>
+		</header>
+
+		<main>
+			<section class="list" id="list"></section>
+
+			<section class="errors">
+				<div class="error-message">
+					<p id="error"></p>
+				</div>
+			</section>
+
+			<section class="operations">
+				<div class="wrapper">
+					<div>
+						<button class="button" id="set-btn">Set</button>
+						<input type="number" placeholder="Index" />
+						<input type="number" placeholder="Data" />
+					</div>
+
+					<div>
+						<button class="button" id="insert-btn">Insert</button>
+						<input type="number" placeholder="Index" />
+						<input type="number" placeholder="Data" />
+					</div>
+
+					<div>
+						<button class="button" id="add-btn">Add</button>
+						<input type="number" placeholder="Data" />
+					</div>
+
+					<div>
+						<div class="remove">
+							<button class="button" id="remove-btn">Remove</button>
+							<button class="button" id="remove-settings">
+								<i class="fas fa-cog"></i>
+							</button>
+						</div>
+
+						<button class="remove-option" id="remove-index-btn">
+							Index
+						</button>
+						<button class="remove-option" id="remove-data-btn">
+							Data
+						</button>
+
+						<input type="number" placeholder="Index" />
+						<input type="number" placeholder="Data" />
+					</div>
+				</div>
+			</section>
+		</main>
+
+		
+		<script src="javascript/LinkedList.js"></script>
+		<script src="javascript/main.js"></script>
+		<script src="javascript/theme.js"></script>
+		
+	</body>
 </html>
