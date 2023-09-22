@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Platform</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .quiz-details {
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 20px;
+        }
+
+        .options {
+            margin-left: 20px;
+        }
+
+        .option {
+            margin-bottom: 10px;
+        }
+
+        .textarea-question {
+            margin-left: 20px;
+        }
+
+        .add-question-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz Title</h1>
+        <div class="quiz-details">
+            <label for="duration">Duration (minutes): </label>
+            <input type="number" id="duration" min="1">
+        </div>
+        
+        <div id="questions">
+            <!-- Questions will be dynamically added here -->
+        </div>
+
+        <button class="add-question-button" onclick="addQuestion()">Add Question</button>
+
+        <button class="submit-button">Submit</button>
+    </div>
+
+    <script>
+        let questionCounter = 1;
+
+        function addQuestion() {
+            const questionsContainer = document.getElementById('questions');
+            const questionDiv = document.createElement('div');
+            questionDiv.classList.add('question');
+
+            const questionType = prompt('Choose question type (MC for multiple-choice, LA for long answer):');
+            
+            if (questionType === 'MC') {
+                questionDiv.innerHTML = `
+                    <p><strong>Question ${questionCounter}:</strong></p>
+                    <input type="text" placeholder="Enter the multiple-choice question">
+                    <div class="options">
+                        <div class="option">
+                            <input type="radio" name="q${questionCounter}" value="a"> A. <input type="text" placeholder="Option A">
+                        </div>
+                        <div class="option">
+                            <input type="radio" name="q${questionCounter}" value="b"> B. <input type="text" placeholder="Option B">
+                        </div>
+                        <button onclick="addOption(this)">Add Option</button>
+                    </div>
+                `;
+            } else if (questionType === 'LA') {
+                questionDiv.innerHTML = `
+                    <p><strong>Question ${questionCounter}:</strong></p>
+                    <textarea rows="4" cols="50" placeholder="Enter the long-answer question"></textarea>
+                `;
+            } else {
+                alert('Invalid question type. Use MC for multiple-choice or LA for long answer.');
+                return;
+            }
+
+            questionsContainer.appendChild(questionDiv);
+            questionCounter++;
+        }
+
+        function addOption(button) {
+            const optionsContainer = button.parentElement;
+            const optionDiv = document.createElement('div');
+            optionDiv.classList.add('option');
+            optionDiv.innerHTML = `<input type="radio" name="${optionsContainer.previousElementSibling.firstChild.nextSibling.name}" value="${String.fromCharCode(97 + optionsContainer.childElementCount)}"> ${String.fromCharCode(97 + optionsContainer.childElementCount)}. <input type="text" placeholder="Option ${String.fromCharCode(97 + optionsContainer.childElementCount)}">`;
+            optionsContainer.insertBefore(optionDiv, button);
+        }
+    </script>
+</body>
+</html>
