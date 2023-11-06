@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
         + "px";
     });
     
-    add(0, 1);
+    add(0, 1); //head
 
     function getUserInput(parentNode) {
         let inputs = parentNode.getElementsByTagName('input');
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (input === null) {
             error.innerHTML =
-                "<i class='fas fa-exclamation-circle'></i>" +
+                "<i class='fa fa-exclamation-circle'></i>" +
                 "You must choose an option to remove nodes";
             error.firstChild.style.animation =
                 "highlightNode .8s ease";
@@ -142,5 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         inputs[1].style.display = "block";
         hideButtons();
 	});
+
+    
      
 });
