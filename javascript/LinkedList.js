@@ -165,3 +165,42 @@ async function removeRecursively(i, data) {
 		removeRecursively(i + 1, data);
     }
 }
+
+$(function() {
+    $('.node').draggable( {
+       containment: 'parent',
+       revert: true,
+       revertDuration: 50,
+       start: function() {
+           var that = $(this);
+           var previous = that.prev( '.node:last' );
+           var next = that.next( '.node:first' );
+           that.data( 'insert' , function(elem) {
+               if (previous.size() > 0) {
+                  $(elem).insertAfter(previous);
+               }
+               else if (next.size() > 0) {
+                  $(elem).insertBefore(next);
+               }
+           });
+       }
+    });
+    /*$('.node').droppable( {
+      accept: '.node',
+      drop: function(event, ui) {
+         var elem = $(this);
+         if (elem.siblings('.node').size() > 1) {
+             ui.draggable.insertAfter(elem);
+             var insert = ui.draggable.data('insert');
+             insert(elem);
+         }
+         else { // case where there are only two elements, swap
+             var parent = elem.closest('.list');
+             var first = parent.children( '.node:first' );
+             var last = parent.children( '.node:last' );
+             last.insertBefore( first );
+         }
+      }
+    });*/
+  });
+ 
