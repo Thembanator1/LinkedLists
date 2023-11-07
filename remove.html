@@ -50,6 +50,10 @@
         padding: 20px;
         color: white;
     }
+    canvas {
+        border: 1px solid black;
+        background: pink;
+      }
 </style>
 <body>
     <button class="open-button" onclick="toggleSidePanel()">
@@ -68,8 +72,9 @@
                 <button id="popButton">Pop Node at Index</button>
             </div>
         </div>
+        <canvas id="myCanvas" width="700" height="300"></canvas>
 
-
+         <button id="pushFront">pushFront</button>
 
         <div class="side-panel" id="mySidepanel">
             <!-- content goes here -->
@@ -81,7 +86,7 @@
         </div>
         
 
-
+     <script src="./pushFront.js"></script>
     <script src="./remove.js"></script>
     <script>
         function toggleSidePanel() {
