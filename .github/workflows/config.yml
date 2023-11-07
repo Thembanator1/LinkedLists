@@ -13,5 +13,5 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '20.x'
-      - run: node javascript/LinkedList.js
+      - run: node .../LinkedList.js
      
