@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedList Visualization</title>
+
+    <link rel="stylesheet" href="./remove.css" />
+
+</head>
+<style>
+    /* Style for the side panel */
+    .side-panel {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #333;
+        overflow-x: hidden;
+        transition: 0.5s;
+    }
+
+    /* Style for the button that opens the side panel */
+    .open-button {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        font-size: 20px;
+    }
+
+    /* Style for the arrow icon */
+    .arrow-icon {
+        transform: rotate(90deg);
+        transition: 0.3s;
+    }
+
+    /* Style for the button when the panel is open */
+    .open-button.active {
+        transform: translateX(-600px);
+    }
+    
+    /* Style for the arrow icon when the panel is open */
+    .open-button.active .arrow-icon {
+        transform: rotate(270deg);
+    }
+
+    /* Style for the content inside the side panel */
+    .side-panel-content {
+        padding: 20px;
+        color: white;
+    }
+</style>
+<body>
+    <button class="open-button" onclick="toggleSidePanel()">
+        <div class="arrow-icon">&#9660;</div>
+    </button>
+
+        <div id="canvas-and-controls">
+            <canvas id="linkedListCanvas" width="1000px" height="500"></canvas>
+
+            <div class="controls">
+                <button id="popFrontButton">Pop Front</button>
+                <button id="popBackButton">Pop Back</button>
+                <!-- Input field for specifying the index -->
+                <label for="indexInput">Enter Index:</label>
+                <input type="number" id="indexInput" min="0" step="1" value="0">
+                <button id="popButton">Pop Node at Index</button>
+            </div>
+        </div>
+
+
+
+        <div class="side-panel" id="mySidepanel">
+            <!-- content goes here -->
+            <div class="pop-code-container">
+                
+            </div>
+            <div class="explanation-box" id="explanation">
+            </div>
+        </div>
+        
+
+
+    <script src="./remove.js"></script>
+    <script>
+        function toggleSidePanel() {
+            var sidePanel = document.getElementById("mySidepanel");
+            var openButton = document.querySelector(".open-button");
+    
+            if (sidePanel.style.width === "600px") {
+                sidePanel.style.width = "0";
+                openButton.classList.remove("active");
+            } else {
+                sidePanel.style.width = "600px";
+                openButton.classList.add("active");
+            }
+        }
+
+        // Function to display the "pop_back" code
+        function displayPopBackCode() {
+            const codeContainer = document.querySelector('.pop-code-container');
+            codeContainer.innerHTML = `
+                <pre>
+                    <code class="popBack-line">void LinkedList::pop_back()</code>
+                    <code class="popBack-line">{</code>
+                    <code class="popBack-line">    if(head->next == nullptr){</code>
+                    <code class="popBack-line">        pop_front();</code>
+                    <code class="popBack-line">        return;</code>
+                    <code class="popBack-line">    }</code>
+                    <code class="popBack-line">    Link* tmp = head;</code>
+                    <code class="popBack-line">    while(tmp->next->next != nullptr){</code>
+                    <code class="popBack-line">        tmp = tmp->next;</code>
+                    <code class="popBack-line">    }</code>
+                    <code class="popBack-line">    delete tmp->next;</code>
+                    <code class="popBack-line">    tmp->next = nullptr;</code>
+                    <code class="popBack-line">    // we are done</code>
+                    <code class="popBack-line">}</code>
+                </pre>
+            `;
+            explanationBox.innerHTML = '<p><strong>pop_back Function:</strong> Removes the last node from the linked list if it exists, or calls "pop_front" if the list is empty.</p>';
+        
+            codeLines = document.querySelectorAll('.popBack-line');
+            explanationBox = document.getElementById('explanation');
+        }
+        function displayPopFrontCode() {
+            const codeContainer = document.querySelector('.pop-code-container');
+            codeContainer.innerHTML = `
+                <pre>
+                    <code class="popFront-line">void LinkedList::pop_front()</code>
+                    <code class="popFront-line">{</code>
+                    <code class="popFront-line">    Link* tmp = head;</code>
+                    <code class="popFront-line">    head = head->next;</code>
+                    <code class="popFront-line">    delete tmp;</code>
+                    <code class="popFront-line">}</code>
+                </pre>
+            `;
+            explanationBox.innerHTML = '<p><strong>pop_front Function:</strong> Removes the first node from the linked list.</p>';
+            
+            // Update the codeLines and explanationBox references
+            codeLines = document.querySelectorAll('.popFront-line');
+            explanationBox = document.getElementById('explanation');
+        }
+
+        var codeLines = document.querySelectorAll('.popBack-line');
+        var explanationBox = document.getElementById('explanation');
+
+        function highlightLine(index) {
+            codeLines.forEach((line, i) => {
+                if (i === index) {
+                    line.classList.add('highlight');
+                } else {
+                    line.classList.remove('highlight');
+                }
+            });
+        }
+
+    </script>
+
+</body>
+</html>
