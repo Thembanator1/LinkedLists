@@ -162,7 +162,7 @@ return new Promise(resolve => setTimeout(resolve, milliseconds));
    // pushBack(0);
     x = 50;
     ctx1.restore();
-    requestAnimationFrame(draw);
+    //requestAnimationFrame(draw);
     // Request the next animation frame after a delay (500 milliseconds)
    
   }
