@@ -63,10 +63,7 @@ function start(){
     const tail = { x: 300, y: 200, name: "tail", next: null, prev: null };
     nodes.push(tail);
 
-    //const null0 = { x: canvas.width - 60, y: 60, name: "null", next: null };
-    //nodes.push(null0);
-
-    test();
+    lastTest = nodes;
     traversal();
 }
 
@@ -121,7 +118,7 @@ function link(node, nodeName){
         }
         else {
             alert("Next node does not exist.");
-            return;
+            return 1;
         }
     }
     else {
@@ -154,7 +151,7 @@ function updateLink() {
     var nextLink = link(nextNode, nextNodeName);
     var prevLink = link(prevNode, prevNodeName);
 
-    if (!nextLink || !prevLink){
+    if (nextLink==1 || prevLink==1){
         return;
     }
 
@@ -197,14 +194,7 @@ function drawLine(colour, sourceNode, targetNode){
 }
 
 function drawNode(sourceNode){
-    var targetNode;
-
-    targetNode = nodes.find(node => node.name === sourceNode.next);
-    drawLine("green", sourceNode, targetNode);
-
-    targetNode = nodes.find(node => node.name === sourceNode.prev);
-    drawLine("red", sourceNode, targetNode);
-
+    
     ctx.beginPath();           
     ctx.arc(sourceNode.x, sourceNode.y, 20, 0, 2 * Math.PI);
     ctx.fillStyle = selectedNode === sourceNode ? "red" : "blue";
@@ -228,7 +218,48 @@ function draw() {
 
     // Draw links
     for (const sourceNode of nodes) {
+        var targetNode = nodes.find(node => node.name === sourceNode.next);
+        drawLine("green", sourceNode, targetNode);
+
+        targetNode = nodes.find(node => node.name === sourceNode.prev);
+        drawLine("red", sourceNode, targetNode);
+    }
+
+    // Draw nodes
+    for (const sourceNode of nodes) {
         drawNode(sourceNode);
+    }
+}
+
+
+
+
+function travLink(start){
+
+    var sourceNode = nodes.find(node => node.name === start);
+    while (sourceNode!=null) {
+
+        var targetNode = nodes.find(node => node.name === sourceNode.next);
+        drawLine("green", sourceNode, targetNode);
+
+        targetNode = nodes.find(node => node.name === sourceNode.prev);
+        drawLine("red", sourceNode, targetNode);
+
+        sourceNode = nodes.find(node => node.name === sourceNode.next);
+        if (sourceNode==null){break;}
+        if (sourceNode.name===start){break;}
+    }
+}
+
+function travNode(start){
+    var sourceNode = nodes.find(node => node.name === start);
+    while (sourceNode!=null) {
+
+        drawNode(sourceNode);
+        sourceNode = nodes.find(node => node.name === sourceNode.next);
+
+        if (sourceNode==null){break;}
+        if (sourceNode.name===start){break;}
     }
 }
 
@@ -236,19 +267,12 @@ function traversal() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     // Draw traversal link 
-    var sourceNode = nodes.find(node => node.name === "head");
-    while (sourceNode!=null) {
+    travLink("head");
+    travLink("temp");
 
-        drawNode(sourceNode);
-        sourceNode = nodes.find(node => node.name === sourceNode.next);
-    }
-
-    sourceNode = nodes.find(node => node.name === "temp");
-    while (sourceNode!=null) {
-
-        drawNode(sourceNode);
-        sourceNode = nodes.find(node => node.name === sourceNode.next);
-    }
+    // Draw traversal nodes
+    travNode("head");
+    travNode("temp");
 
 }
 
