@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Node Graph</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+<body onload="start()">
+    <canvas id="canvas" width="800" height="600"></canvas> 
+    <div>
+        <input type="button" value="Add Node" onclick="addRandomNode()">
+        <input type="text" id="nodeName" placeholder="Node Name">
+
+        <input type="button" value="Update Link" onclick="updateLink()">
+        <input type="text" id="sourceNode" placeholder="Source Node">
+        <input type="text" id="nextNode" placeholder="Next Node (or enter null)">
+        <input type="text" id="prevNode" placeholder="Prev Node (or enter null)">
+
+        <input type="button" value="Delete Node" onclick="deleteNode()">
+        <input type="button" value="Memory" onclick="draw()">
+        <input type="button" value="Test" onclick="test()">
+    </div>
+
+    <!-- Include the external JavaScript file -->
+    <script src="first.js"></script>
+</body>
+</html>
