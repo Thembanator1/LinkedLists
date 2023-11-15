@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lecturer Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Lecturer Dashboard</h1>
+    <input type="text" id="quizNameInput" placeholder="Enter Quiz Name">
+    <button type="button" id="saveQuizNameButton">Save Quiz Name</button>
+
+    <form id="quizForm">
+      <label for="questionType">Question Type:</label>
+      <select id="questionType" name="questionType">
+        <option value="multipleChoice">Multiple Choice</option>
+        <option value="multiAnswer">Multi-Answer</option>
+        <option value="longQuestion">Long Question</option>
+      </select>
+
+      <label for="questionText">Question Text:</label>
+      <textarea id="questionText" name="questionText" rows="4"></textarea>
+
+      <div class="options-container" id="optionsContainer">
+        <label>Options:</label>
+        <div class="option-input">
+          <input type="text" name="option" placeholder="Option 1">
+          <input type="checkbox" name="options" disabled>
+        </div>
+      </div>
+
+      <button type="button" id="addOptionButton">Add Option</button>
+
+      <label for="image">Upload Image (optional):</label>
+      <input type="file" id="image" name="image">
+
+      <button type="button" id="addQuestionButton">Add Question</button>
+    </form>
+
+    <div class="question-list" id="questionList"></div>
+
+    <button type="button" id="submitAnswersButton">Submit Answers</button>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
