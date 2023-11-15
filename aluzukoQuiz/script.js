@@ -89,6 +89,7 @@ function addQuestion() {
 }
 
 function displayQuestion(question) {
+  console.log(question);
   const questionList = document.getElementById('questionList');
   const questionDiv = document.createElement('div');
   questionDiv.classList.add('question');

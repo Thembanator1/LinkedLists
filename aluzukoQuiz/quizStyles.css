@@ -11,7 +11,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    
   }
   
   button {
@@ -31,13 +31,7 @@ body {
     align-items: center;
   }
   
-  .quiz-item {
-    cursor: pointer;
-    padding: 10px;
-    margin: 5px;
-    background-color: #e1f5fe;
-    border-radius: 8px;
-  }
+
   
   .popup {
     position: fixed;
@@ -67,4 +61,49 @@ body {
     border-radius: 5px;
     cursor: pointer;
   }
-  
+
+  .question-image {
+    max-width: 300px;
+    max-height: 150px;
+    width: auto;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  .question {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    text-align: left;
+    background-color: #e1f5fe; /* Light blue background */
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  /* Add this to your existing CSS or create a new style block */
+/* Add this to your existing CSS or create a new style block */
+.quiz-item-container {
+  display: inline-block; /* Make containers inline */
+  margin: 10px; /* Adjust margin as needed */
+}
+
+.quiz-item {
+  display: inline-block;
+  padding: 10px; /* Add padding for a button-like appearance */
+  background-color: #f0f0f0; /* Add background color */
+  border: 1px solid #ccc; /* Add border styling */
+  cursor: pointer;
+}
+
+.quiz-item:hover {
+  background-color: #e0e0e0; /* Change background color on hover */
+}
+
+/* Add any other styles you need */
+
+
+
+
+/* Add any other styles you need */
+
+
