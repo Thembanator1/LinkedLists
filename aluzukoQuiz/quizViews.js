@@ -77,32 +77,43 @@ const firebaseConfig = {
   
     return `${day}-${month}-${year}`;
   }
+  var i = 1;
+
   // Function to display a question
   function displayQuestion(question, container) {
     const questionDiv = document.createElement('div');
     questionDiv.classList.add('question');
   
     // Display the question text
-    questionDiv.innerHTML = `<strong>${question.text}</strong><br>`;
+    questionDiv.innerHTML = `<strong>${i++}. ${question.text}</strong><br>`;
   
     // Display the image if available
     if (question.image) {
       questionDiv.innerHTML += `<img class="question-image" src="${question.image}" alt="Question Image"><br>`;
     }
   
-    // Display options for multiple-choice questions
-    if (question.type === 'multipleChoice' || question.type === 'multiAnswer') {
-      questionDiv.innerHTML += '<div class="options-container">';
-      for (const option of question.options) {
-        questionDiv.innerHTML += `
-          <div class="option-input">
-            <input type="${question.type === 'multiAnswer' ? 'checkbox' : 'radio'}" name="options" value="${option}">
-            ${option}
-          </div>`;
-      }
+    // Check if the question type is 'longQuestion'
+    if (question.type === 'longQuestion') {
+      // Display a text area for the student to write an answer
+      questionDiv.innerHTML += '<div class="long-answer-container">';
+      questionDiv.innerHTML += '<textarea rows="4" cols="50" placeholder="Write your answer here..."></textarea>';
       questionDiv.innerHTML += '</div>';
+    } else {
+      // Display options for multiple-choice questions
+      if (question.type === 'multipleChoice' || question.type === 'multiAnswer') {
+        questionDiv.innerHTML += '<div class="options-container">';
+        for (const option of question.options) {
+          questionDiv.innerHTML += `
+            <div class="option-input">
+              <input type="${question.type === 'multiAnswer' ? 'checkbox' : 'radio'}" name="options" value="${option}">
+              ${option}
+            </div>`;
+        }
+        questionDiv.innerHTML += '</div>';
+      }
     }
   
     container.appendChild(questionDiv);
   }
+  
   
