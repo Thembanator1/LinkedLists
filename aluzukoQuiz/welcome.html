@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: pink;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 18px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+      background-color: #00bcd4;
+      border-radius: 5px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .button.student {
+      background-color: #00bcd4;
+    }
+
+    .button.lecturer {
+      background-color: #00bcd4;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Quiz Platform</h1>
+    <a href="#" class="button student">Student</a>
+    <a href="./lecturerdashboard.html" class="button lecturer">Lecturer</a>
+  </div>
+</body>
+</html>
