@@ -11,9 +11,12 @@ const nodes = [];
 var firstTest;
 
 var toAdd = [];
+var toAddback;
+var toAddfront;
 
 var ToRemove = [];
-
+var toRemoveBack;
+var toRemoveFront;
 let selectedNode = null;
 
 start();
@@ -293,6 +296,7 @@ function traversal() {
 
 
 function test(){
+
    var lastTest = [].concat(nodes);   
     let unitTest = new Tests(firstTest,lastTest);
     var Nochange = unitTest.testNochange();
@@ -337,15 +341,71 @@ function test(){
     
         else{
 
-            alert("The node was not removed" + ToRemove[i]);
+            alert("The node was not removed " + ToRemove[i]);
 
         }
     }
+
+        var len3 = 0;
+    
+        var addB = unitTest.testAddFront(toAddback);
+        if(addB =="true"){
+            len3 = 100;
+         
+        }
+        else{
+            len3 = 0;
+           
+        }
+
+    
+
+        var len4 = 0;
+        var removeB = unitTest.testRemoveBack(toRemoveBack);
+        if(removeB == "true"){
+
+            len4 = 100;
+            
+        }
+        else{
+
+            len4 = 0;
+            
+        }
+
+        var len5 = 0;
+        var AddNodeback = unitTest.testAddBack(toAddfront);
+        
+        if(AddNodeback == "true"){
+            len5 = 100;
+           
+        }else{
+            len5 = 0;
+            
+        }
+
+        var len6 = 0;
+        var remFront = unitTest.testRemoveFront(toRemoveFront);
+        if(remFront == "true"){
+            len6 = 100;
+        
+        }else{
+            len6 = 0;
+          
+        }
+    
+
+    
     const scoreCard = document.getElementById('scoreCard');
     const AddingScore = (addInt/len) * 100;
     const RemoveScore = (removeInt/len2) * 100;
     const ChangingScore = 100;
-  
+    const Addingfront = len3;
+    const AddingBack = len5;
+    const poppingBack = len4;
+    const poppingFront = len6;
+ // const poppingFront = 
+
     // Calculate overall percentage
     const overallScore = (AddingScore + RemoveScore + ChangingScore) / 3;
   
@@ -353,6 +413,10 @@ function test(){
     document.getElementById('Adding-Score').textContent = AddingScore;
     document.getElementById('Removing-Score').textContent = RemoveScore;
     document.getElementById('Changing-Score').textContent = ChangingScore;
+    document.getElementById('Front-Score').textContent = Addingfront;
+    document.getElementById('pBack-Score').textContent = poppingBack;
+    document.getElementById('pushBack-Score').textContent = AddingBack;
+    document.getElementById('popFront-Score').textContent = poppingFront;
     scoreCard.style.display = scoreCard.style.display = 'block';
 }
 
@@ -405,9 +469,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function generateQuestions() {
 
-     toAdd.push(document.getElementById('Add').value);
+    // Assuming you have toAdd and toAddback arrays declared somewhere in your code
 
-     ToRemove.push(document.getElementById('Remove').value);
+    // Get the input values
+    var addValue = document.getElementById('Add').value;
+    var addBackValue = document.getElementById('Addback').value;
+
+    // Check if the values are not null before pushing
+    if (addValue !== null && addValue !== "") {
+        toAdd.push(addValue);
+    }
+
+    if (addBackValue !== null && addBackValue !== "") {
+        toAddback =addBackValue;
+    }
+///////////////////////////////////////////////
+    var RemoveValue = document.getElementById('Remove').value;
+    var RemoveBackValue = document.getElementById('RemoveBack').value;
+
+    if (RemoveValue !== null && RemoveValue !== "") {
+        ToRemove.push(RemoveValue);
+    }
+
+    if (RemoveBackValue !== null && RemoveBackValue !== "") {
+        toRemoveBack =RemoveBackValue;
+    }
+///////////////////////////////////////////////
+    var RemoveFrontValue = document.getElementById('RemoveFront').value;
+    var AddBackValue = document.getElementById('AddingtoBack').value;
+
+    if (RemoveFrontValue !== null && RemoveFrontValue !== "") {
+        toRemoveFront = RemoveFrontValue;
+    }
+
+    if (AddBackValue !== null && AddBackValue !== "") {
+        toAddfront =AddBackValue;
+    }
+
+     
 
   
 }
