@@ -231,7 +231,7 @@ function keepPanelOpen(){
     var sidePanel = document.getElementById("mySidepanel");
     var openButton = document.querySelector(".open-button");
     
-    sidePanel.style.width = "550px";
+    sidePanel.style.width = "490px";
     openButton.classList.add("active");    
 }
 
@@ -241,7 +241,7 @@ pushFrontButton.addEventListener("click", () => {
     keepPanelOpen();
     // Get the index from the input field
     const stringValue = String(document.getElementById("pushFrontInput").value);
-    const index = parseInt(indexInput.value, 10); // Parse the input as an integer
+
 
     //drawForwardLinkedList();
     linkedList.pushFront(stringValue);
