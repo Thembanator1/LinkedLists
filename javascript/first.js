@@ -1,14 +1,22 @@
 // i.js
-//import Tests from './second.js';
+import Tests from './second.js';
+
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+
 const nodes = [];
-var lastTest;
+
+var firstTest;
+
+var toAdd = [];
+
+var ToRemove = [];
 
 let selectedNode = null;
 
+start();
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
@@ -63,7 +71,10 @@ function start(){
     const tail = { x: 300, y: 200, name: "tail", next: null, prev: null };
     nodes.push(tail);
 
-    lastTest = nodes;
+    //const null0 = { x: canvas.width - 60, y: 60, name: "null", next: null };
+    //nodes.push(null0);
+
+    firstTest = [].concat(nodes);    
     traversal();
 }
 
@@ -282,7 +293,133 @@ function traversal() {
 
 
 function test(){
-    lastTest = nodes;
+   var lastTest = [].concat(nodes);   
+    let unitTest = new Tests(firstTest,lastTest);
+    var Nochange = unitTest.testNochange();
+
+    if(Nochange == "true"){
+        alert("No changes Made");
+    }
+
+    else{
+        alert("Changes were made");
+    }
+
+    var len = toAdd.length;
+    var addInt = 0;
+
+    for (let i = 0; i < len; i++) {
+        var add = unitTest.testAdd(toAdd[i]);
+
+        if(add == "true"){
+
+            addInt = addInt + 1;
+            
+        }
+    
+        else{
+
+            alert("False incorrect / no node was added"  + toAdd[i] );
+            
+        }
+    }
+    var len2 = ToRemove.length;
+    var removeInt = 0;
+    for (let i = 0; i < len2; i++) {
+        var remove = unitTest.testRemove(ToRemove[i]);
+
+        if(remove == "true"){
+
+            removeInt = removeInt + 1; 
+           
+
+        }
+    
+        else{
+
+            alert("The node was not removed" + ToRemove[i]);
+
+        }
+    }
+    const scoreCard = document.getElementById('scoreCard');
+    const AddingScore = (addInt/len) * 100;
+    const RemoveScore = (removeInt/len2) * 100;
+    const ChangingScore = 100;
+  
+    // Calculate overall percentage
+    const overallScore = (AddingScore + RemoveScore + ChangingScore) / 3;
+  
+    // Update HTML elements with calculated scores
+    document.getElementById('Adding-Score').textContent = AddingScore;
+    document.getElementById('Removing-Score').textContent = RemoveScore;
+    document.getElementById('Changing-Score').textContent = ChangingScore;
+    scoreCard.style.display = scoreCard.style.display = 'block';
 }
 
 traversal();
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+     // Function to handle "Creating questions" button click
+     
+     document.getElementById("toggleButton").addEventListener("click", function () {
+        ToggleOn();
+    });
+
+    document.getElementById("close").addEventListener("click", function () {
+        toggleScoreCard();
+    });
+
+    document.getElementById("loginButton").addEventListener("click", function () {
+        generateQuestions();
+    });
+     // Add click event listener to the button
+
+    // Function to handle "Add Node" button click
+    document.getElementById("addNodeBtn").addEventListener("click", function () {
+        addRandomNode();
+    });
+
+    // Function to handle "Update Link" button click
+    document.getElementById("updateLinkBtn").addEventListener("click", function () {
+        updateLink();
+    });
+
+    // Function to handle "Delete Node" button click
+    document.getElementById("deleteNodeBtn").addEventListener("click", function () {
+        deleteNode();
+    });
+
+    // Function to handle "Memory" button click
+    document.getElementById("drawBtn").addEventListener("click", function () {
+        draw();
+    });
+
+    // Function to handle "Test" button click
+    document.getElementById("testBtn").addEventListener("click", function () {
+        test();
+    });
+});
+
+function generateQuestions() {
+
+     toAdd.push(document.getElementById('Add').value);
+
+     ToRemove.push(document.getElementById('Remove').value);
+
+  
+}
+
+function ToggleOn() {
+    var loginCard = document.getElementById('loginCard');
+    loginCard.style.display = (loginCard.style.display === 'none' || loginCard.style.display === '') ? 'block' : 'none';
+}
+
+function toggleScoreCard() {
+    const scoreCard = document.getElementById('scoreCard');
+    const overlay = document.getElementById('overlay');
+    scoreCard.style.display = scoreCard.style.display === 'none' ? 'block' : 'none';
+   
+  }

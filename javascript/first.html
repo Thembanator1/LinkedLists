@@ -4,29 +4,169 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Node Graph</title>
+    
     <style>
+    body {
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+        height: 100vh;
+        margin: 0;
+        background-color: pink;
+    }
+
+    div {
+        width: 300px; /* Set a fixed width for the container */
+        margin-top: 20px; /* Adjust margin as needed */
+    }
+
+    /* Add margin to separate input elements */
+    input {
+        margin-bottom: 10px;
+    }
+
+    /* Updated button styles */
+    input[type="button"] {
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
+        background-color: #4CAF50;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    /* Style for the "Generate Questions" and "Save Questions" buttons */
+    #toggleButton, #loginButton {
+        background-color: #008CBA; /* Change color as needed */
+    }
+
+    /* Style for the "Delete Node" button */
+    #deleteNodeBtn {
+        background-color: #FF4500; /* Change color as needed */
+    }
+
+    /* Style for the "Memory" button */
+    #drawBtn {
+        background-color: #9932CC; /* Change color as needed */
+    }
+
+    /* Style for the "Test" button */
+    #testBtn {
+        background-color: #FF8C00; /* Change color as needed */
+    }
+
         canvas {
             border: 1px solid #000;
+            
         }
-    </style>
-</head>
-<body onload="start()">
-    <canvas id="canvas" width="800" height="600"></canvas> 
-    <div>
-        <input type="button" value="Add Node" onclick="addRandomNode()">
-        <input type="text" id="nodeName" placeholder="Node Name">
+        .login-card {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      display: none; /* initially hidden */
+    }
 
-        <input type="button" value="Update Link" onclick="updateLink()">
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    .login-btn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .toggle-btn {
+      background-color: #008CBA;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    #scoreCard {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+    </style>
+    
+        
+    </script>
+</head>
+<body>
+    <canvas id="canvas" width="800" height="600"></canvas> 
+
+    <div class="login-card" id="loginCard">
+
+        <h2>Generate Questions</h2>
+        <div class="input-group">
+          <label for="Add">Enter Node to Add:</label>
+          <input type="text" id="Add" placeholder="Enter Node">
+        </div>
+    
+        <div class="input-group">
+          <label for="Remove">Enter Node to remove:</label>
+          <input type="text" id="Remove" placeholder="Enter Node">
+        </div>
+    
+      </div>
+
+    <div>
+        <input type="button" value="Add Node" id="addNodeBtn">
+        <input type="text" id="nodeName" placeholder="Node Name">
+        
+        
+        <input type="button" value="Update Link" id="updateLinkBtn">
         <input type="text" id="sourceNode" placeholder="Source Node">
         <input type="text" id="nextNode" placeholder="Next Node (or enter null)">
         <input type="text" id="prevNode" placeholder="Prev Node (or enter null)">
 
-        <input type="button" value="Delete Node" onclick="deleteNode()">
-        <input type="button" value="Memory" onclick="draw()">
-        <input type="button" value="Test" onclick="test()">
+        <input type="button" value="Generate Questions" id="toggleButton">
+        <input type="button" value="Save Questions" id="loginButton">
+
+        <input type="button" value="Delete Node" id="deleteNodeBtn">
+        
+        <input type="button" value="Memory" id="drawBtn">
+        <input type="button" value="Test" id="testBtn">
+
+    </div>
+    <div id="scoreCard">
+        <h2>Overall Scores</h2>
+        <p>Adding Nodes: <span id="Adding-Score"></span>%</p>
+        <p>Removing Nodes: <span id="Removing-Score"></span>%</p>
+        <p>Making Changes: <span id="Changing-Score"></span>%</p>
+        <input type="button" value="close" id="close">
     </div>
 
     <!-- Include the external JavaScript file -->
-    <script src="first.js"></script>
+    <script type="module" src="first.js"></script>
 </body>
 </html>
