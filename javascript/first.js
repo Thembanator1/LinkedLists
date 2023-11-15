@@ -1,5 +1,6 @@
 // i.js
 import Tests from './second.js';
+import DoubleTests from './double.js';
 
 
 const canvas = document.getElementById("canvas");
@@ -295,17 +296,19 @@ function traversal() {
 
 
 
-function test(){
+function test(testType){
 
    var lastTest = [].concat(nodes);   
-    let unitTest = new Tests(firstTest,lastTest);
+    let unitTest = new testType(firstTest,lastTest);
     var Nochange = unitTest.testNochange();
-
+    var cMade =0;
     if(Nochange == "true"){
+        
         alert("No changes Made");
     }
 
     else{
+        cMade = 100;
         alert("Changes were made");
     }
 
@@ -361,6 +364,7 @@ function test(){
     
 
         var len4 = 0;
+        if(toRemoveBack != null){
         var removeB = unitTest.testRemoveBack(toRemoveBack);
         if(removeB == "true"){
 
@@ -372,6 +376,8 @@ function test(){
             len4 = 0;
             
         }
+
+    }
 
         var len5 = 0;
         var AddNodeback = unitTest.testAddBack(toAddfront);
@@ -385,7 +391,11 @@ function test(){
         }
 
         var len6 = 0;
+        if(toRemoveFront != null){
+        
+        
         var remFront = unitTest.testRemoveFront(toRemoveFront);
+
         if(remFront == "true"){
             len6 = 100;
         
@@ -393,13 +403,14 @@ function test(){
             len6 = 0;
           
         }
+    }
     
 
     
     const scoreCard = document.getElementById('scoreCard');
     const AddingScore = (addInt/len) * 100;
     const RemoveScore = (removeInt/len2) * 100;
-    const ChangingScore = 100;
+    const ChangingScore = cMade ;
     const Addingfront = len3;
     const AddingBack = len5;
     const poppingBack = len4;
@@ -463,7 +474,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Function to handle "Test" button click
     document.getElementById("testBtn").addEventListener("click", function () {
-        test();
+        test(Tests);
+    });
+    document.getElementById("testBtn2").addEventListener("click", function () {
+        test(DoubleTests);
     });
 });
 
