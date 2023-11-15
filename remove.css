@@ -14,7 +14,7 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
-.popBack-line {
+.popBack-line, .code-line {
     display: block;
 }
 .popFront-line {
@@ -37,6 +37,7 @@ body {
     display: flex; /*side by side*/
 
 }
+
 #canvas-and-controls{
     margin-top: 15px;
     display: flex;

@@ -71,7 +71,9 @@
                 <button id="pushBackButton">Push Back</button>
             </div>
 
-            <canvas id="linkedListCanvas" width="1000px" height="400"></canvas>
+            <div class = "canvas-container">
+                <canvas id="linkedListCanvas" width="900" height="550"></canvas>
+            </div>
 
             <div class="controls">
                 <button id="popFrontButton">Pop Front</button>
@@ -94,7 +96,7 @@
         </div>
         
 
-    <script src="./push.js"></script>
+   
     <script>
         function toggleSidePanel() {
             var sidePanel = document.getElementById("mySidepanel");
@@ -133,7 +135,24 @@
             codeLines = document.querySelectorAll('.popBack-line');
             explanationBox = document.getElementById('explanation');
         }
-
+        // Function to display the "pop_back" code
+        function displayPushFrontCode() {
+            const codeContainer = document.querySelector('.pop-code-container');
+            codeContainer.innerHTML = `
+                <pre>
+                    <code class="popFront-line">void LinkedList::push_front(Thing t)</code>
+                    <code class="popFront-line">{</code>
+                    <code class="popFront-line">    Link* newHead = new Link(t);</code>
+                    <code class="popFront-line">    newHead->next = head;</code>
+                    <code class="popFront-line">    head = newHead;</code>
+                    <code class="popFront-line">}</code>
+                </pre>
+            `;
+            explanationBox.innerHTML = '<p><strong>push_back Function:</strong> Adds a Node to the back of the list </p>';
+        
+            codeLines = document.querySelectorAll('.popFront-line');
+            explanationBox = document.getElementById('explanation');
+        }
         // Function to display the "pop_back" code
         function displayPopBackCode() {
             const codeContainer = document.querySelector('.pop-code-container');
@@ -191,8 +210,12 @@
                 }
             });
         }
+        function showExplanation(index, text) {
+            explanationBox.innerHTML = `<p><strong>Line ${index}:</strong> ${text}</p>`;
+        }
 
     </script>
+     <script src="./push.js"></script>
 
 </body>
 </html>
