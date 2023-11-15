@@ -95,6 +95,42 @@ class LinkedList {
         newLink.next = this.head;
         this.head = newLink;
         this.size++; // Increment the size
+
+        var steps = pushFrontSteps;
+        var totalSteps = steps.length;
+        console.log(steps.length)
+        let currentStep = 0;
+        
+        // Increment the size
+        const executeNextStep = () => {
+            const step = steps[0];
+            highlightLine(step.index);
+            showExplanation(step.index, step.explanation);
+            // Delay 2 seconds per explanation
+            setTimeout(() => {
+                if (currentStep < 4) {
+                    currentStep++; //u i think know I complicated this code, but this make currentStep ==1
+                    if (currentStep === 1) {
+                        // When at the second explanation, perform traversal with green and red highlighting
+                        const step = steps[currentStep];
+                        highlightLine(step.index);
+                        showExplanation(step.index, step.explanation);
+                        currentStep++;
+                    }
+                    if (currentStep === 2) { // code-line: delete tmp;
+                        setTimeout(() => {
+                            const step = steps[currentStep];
+                            highlightLine(step.index);
+                            showExplanation(step.index, step.explanation);
+                            // this.popAtIndex(0);
+                        }, 4000);
+                    }
+                }
+            }, 900);
+        };
+        
+        // Start the code trace animation
+        executeNextStep();
     }
     pushBack(value) {
         const newLink = new Link(value);
@@ -114,32 +150,104 @@ class LinkedList {
             current.next = newLink;
         }
 
-        this.size++; // Increment the size
+        this.size++; 
+
+
     }
     
 }
+const pushFrontSteps = [
+    {
+        index: 2, //code line 7
+        explanation: 'We create a new Node that we will make the head/first item.',
+    },
+    {
+        index: 3, //line 8
+        explanation: 'We Update the newcomers next-pointer to point to the "old" head in memory.',
+    },
+    {
+        index: 4, //line 10
+        explanation: 'We update the linked lists head pointer to point to the new Head.',
+    }
+
+];
+const pushBackSteps = [
+    {
+        index: 7, //code line 7
+        explanation: 'We wanna traverse till we get to the Last Node, the node that points to null.',
+    },
+    {
+        index: 8, //line 8
+        explanation: 'So while the condition is satisfied, we move forward.',
+    },
+    {
+        index: 10, //line 10
+        explanation: 'We have reached the last node and so we update its next pointer to now point to a new Node we have created in memory.',
+    }
+
+];
+const popBackSteps = [
+    {
+        index: 7, //code line 7
+        explanation: 'Our traversal will be looking 2 steps ahead.',
+    },
+    {
+        index: 8, //line 8
+        explanation: 'Move to the next node so long as while loop is satisfied, (i.e. the 2nd node ahead of us is NOT the last)',
+    },
+    {
+        index: 10, //line 10
+        explanation: 'Condition broken, the node ahead is the last(points to null), lets delete it!',
+    }
+
+];
+
+const popBackSteps2 = [ // fighting a bug
+    {
+        index: 2, 
+        explanation: 'The heads next pointer is set to nullptr, implying the head is also the tail.',
+    },
+    {
+        index: 3, 
+        explanation: 'So we call pop_front() and delete the node.',
+    },
+    {
+        index: 4, 
+        explanation: 'We return and finish execution.',
+    },
+    {
+        index: 10, 
+        explanation: 'The next pointer of the node we are currently on (tmp) Still points to where the deleted node was, so we set it to nullptr;',
+    },
+    {
+        index: 11, 
+        explanation: 'The next pointer of the node we are currently on (tmp) Still points to where the deleted node was, so we set it to nullptr;',
+    },
+
+];
 
 const linkedList = new LinkedList(); // Create an instance of the linked list
 function keepPanelOpen(){
     var sidePanel = document.getElementById("mySidepanel");
     var openButton = document.querySelector(".open-button");
     
-    sidePanel.style.width = "600px";
+    sidePanel.style.width = "550px";
     openButton.classList.add("active");    
 }
 
 const pushFrontButton = document.getElementById("pushFrontButton");
 pushFrontButton.addEventListener("click", () => {
+    displayPushFrontCode(); 
+    keepPanelOpen();
     // Get the index from the input field
     const stringValue = String(document.getElementById("pushFrontInput").value);
     const index = parseInt(indexInput.value, 10); // Parse the input as an integer
-    
-    // Call the popAtIndex method with the specified index
+
     //drawForwardLinkedList();
     linkedList.pushFront(stringValue);
     drawFNode(stringValue)
     //drawLinkedList();
-    drawForwardLinkedList();
+    //drawForwardLinkedList();
     
     setTimeout(() => {
         drawLinkedList();
@@ -199,14 +307,9 @@ function drawForwardLinkedList() {
 }
 
 // Initial visualization
-linkedList.pushFront("F");
-linkedList.pushFront("E");
-linkedList.pushFront("D");
 linkedList.pushFront("C");
 linkedList.pushFront("B");
 linkedList.pushFront("A");
-linkedList.pushBack(1);
-linkedList.pushBack(2);
 drawLinkedList();
 
 const pushBackButton = document.getElementById("pushBackButton");
@@ -237,6 +340,42 @@ pushBackButton.addEventListener("click", () => {
         }
     };
     traverseAndHighlight();
+    var steps = pushBackSteps;
+    var totalSteps = steps.length;
+    console.log(steps.length)
+    let currentStep = 0;
+    
+    // Increment the size
+    const executeNextStep = () => {
+        const step = steps[0];
+        highlightLine(step.index);
+        showExplanation(step.index, step.explanation);
+        // Delay 2 seconds per explanation
+        setTimeout(() => {
+            if (currentStep < 3) {
+                currentStep++; //u i think know I complicated this code, but this make currentStep ==1
+                if (currentStep === 1) {
+                    // When at the second explanation, perform traversal with green and red highlighting
+                    const step = steps[currentStep];
+                    highlightLine(step.index);
+                    showExplanation(step.index, step.explanation);
+                    currentStep++;
+                }
+                if (currentStep === 2) { // code-line: delete tmp;
+                    setTimeout(() => {
+                        const step = steps[currentStep];
+                        highlightLine(step.index);
+                        showExplanation(step.index, step.explanation);
+                        // this.popAtIndex(0);
+                    }, 4000);
+                }
+            }
+        }, 900);
+    };
+    
+    // Start the code trace animation
+    executeNextStep();
+
     
     setTimeout(() => {
         visualPushBack(stringValue);

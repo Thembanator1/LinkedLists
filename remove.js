@@ -70,9 +70,7 @@ function drawArrowWithTriangle(ctx, startX, startY, endX, endY) {
     ctx.fill();
 }
 
-function showExplanation(index, text) {
-    explanationBox.innerHTML = `<p><strong>Line ${index}:</strong> ${text}</p>`;
-}
+
 
 // Define the linked list data structure
 class Link {
@@ -198,6 +196,7 @@ class LinkedList {
                     const step = steps[2];
                     highlightLine(step.index);
                     showExplanation(step.index, step.explanation);
+                    this.basicPopBack();
                     
                 }, 6000);
                 /*
@@ -207,81 +206,82 @@ class LinkedList {
                     showExplanation(step.index, step.explanation);
                     
                 }, 8000);
-                */
+                
                 setTimeout(() => {
                     const step = steps[4];
                     highlightLine(step.index);
                     showExplanation(step.index, step.explanation);
                     
-                }, 8000);
+                }, 8000);*/
                 
             };
             executeNextStep(); //execute
-        }
+        }else{
 
-        const traverseAndHighlight = () => {
-            if (current) {
-                current.traversed = true; // Highlight the current node in green
-                drawLinkedList();
+            const traverseAndHighlight = () => {
+                if (current) {
+                    current.traversed = true; // Highlight the current node in green
+                    drawLinkedList();
+                    setTimeout(() => {
+                        current.traversed = false; // Reset traversal highlighting for this node
+                        if (current.next) {
+                            previous = current;
+                            current = current.next;
+                            traverseAndHighlight(); // Continue traversal
+                        } else {
+                            // If the traversal is complete, set the last node as red
+                            current.highlighted = true;
+                            drawLinkedList();
+                            
+                        }
+                    }, 500); // Delay for 0.5 seconds before moving to the next node
+                }
+            };
+    
+            
+            const executeNextStep = () => {
+                const step = steps[0];
+                highlightLine(step.index);
+                showExplanation(step.index, step.explanation);
+                //Delay 5 seconds so first explanation appears long enough
                 setTimeout(() => {
-                    current.traversed = false; // Reset traversal highlighting for this node
-                    if (current.next) {
-                        previous = current;
-                        current = current.next;
-                        traverseAndHighlight(); // Continue traversal
-                    } else {
-                        // If the traversal is complete, set the last node as red
-                        current.highlighted = true;
-                        drawLinkedList();
-                        
+                    if (currentStep < totalSteps) {
+                        currentStep++; // from 0 to 1
+                        if (currentStep === 1) {
+                            // When at the second explanation, perform traversal with green and red highlighting
+                            const step = steps[currentStep];
+                            highlightLine(step.index);
+                            showExplanation(step.index, step.explanation);
+                            traverseAndHighlight(() => {
+                                this.basicPopBack();
+                            });
+                            currentStep++;
+                        }
+                        if(currentStep == totalSteps-1){
+                            setTimeout(() => {
+                                let step = steps[currentStep];
+                                highlightLine(step.index);
+                                    console.log(step.index)
+                                    console.log(step)
+                                showExplanation(step.index, step.explanation);
+                                this.basicPopBack();
+                            }, 3000);
+                        }
+            
+                        //currentStep++;
                     }
-                }, 500); // Delay for 0.5 seconds before moving to the next node
-            }
-        };
-  
-        
-        const executeNextStep = () => {
-            const step = steps[0];
-            highlightLine(step.index);
-            showExplanation(step.index, step.explanation);
-            //Delay 5 seconds so first explanation appears long enough
-            setTimeout(() => {
-                if (currentStep < totalSteps) {
-                    currentStep++; // from 0 to 1
-                    if (currentStep === 1) {
-                        // When at the second explanation, perform traversal with green and red highlighting
-                        const step = steps[currentStep];
+                    setTimeout(() => {
+                        const step = popBackSteps2[4];
                         highlightLine(step.index);
                         showExplanation(step.index, step.explanation);
-                        traverseAndHighlight(() => {
-                            this.basicPopBack();
-                        });
-                        currentStep++;
-                    }
-                    if(currentStep == totalSteps-1){
-                        setTimeout(() => {
-                            let step = steps[currentStep];
-                            highlightLine(step.index);
-                                console.log(step.index)
-                                console.log(step)
-                            showExplanation(step.index, step.explanation);
-                            this.basicPopBack();
-                        }, 3000);
-                    }
+                        
+                    }, 5000);
+                }, 3000);
+            };
         
-                    //currentStep++;
-                }
-                setTimeout(() => {
-                    const step = popBackSteps2[4];
-                    highlightLine(step.index);
-                    showExplanation(step.index, step.explanation);
-                    
-                }, 5000);
-            }, 3000);
-        };
-    
-        // Start the code trace animation
-        executeNextStep();
+            // Start the code trace animation
+            executeNextStep();
+        }
         
     }
     popFront() {
