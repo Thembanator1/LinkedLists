@@ -166,6 +166,7 @@ function submitAnswers() {
   // Store the quiz details in the database
   storeQuizInDatabase(quizName, questionDictionary, answers, mark)
     .then(() => {
+      alert("Quiz Successfully created");
       console.log('Quiz successfully stored in the database.');
     })
     .catch(error => {
@@ -194,7 +195,7 @@ function handleImageUpload(event) {
       uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
         // Use the download URL as needed (e.g., save it in the database)
         console.log('Image uploaded successfully. URL:', downloadURL);
-        link=downloadURL;
+        link=downloadURL || "";
         // You can now save this URL to your database or use it as required.
       });
     }

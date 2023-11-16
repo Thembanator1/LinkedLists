@@ -16,7 +16,7 @@ const firebaseConfig = {
   
   // Global list to store all quiz questions
   const allQuestions = [];
-  
+  var totalMark=0;
   // Get the quiz ID from local storage
   const quizId = localStorage.getItem('quizId');
   
@@ -28,7 +28,7 @@ const firebaseConfig = {
     // Fetch and display the quiz details
     quizRef.once('value', (snapshot) => {
       const quizDetails = snapshot.val();
-  
+      totalMark=getMarks(quizDetails.questions);
       // Display quiz details in the header
       displayQuizDetails(quizDetails);
   
@@ -44,15 +44,37 @@ const firebaseConfig = {
     const header = document.querySelector('.header');
     header.innerHTML += `
       <h2>${quizDetails.quizName}</h2>
-      <p><strong>Course Name:</strong> ${quizDetails.courseName}</p>
-      <p><strong>Course Code:</strong> ${quizDetails.courseCode}</p>
-      <p><strong>Lecturer Name:</strong> ${quizDetails.lecturerName}</p>
+      <p><strong>Course Name:</strong> ${"Data Structure and algorithms"}</p>
+      <p><strong>Course Code:</strong> ${"COMS1018A"}</p>
+      <p><strong>Lecturer Name:</strong> ${"Dr Richard Klein"}</p>
       <p><strong>Date:</strong> ${getCurrentDate()}</p>
-      <p><strong>Duration:</strong> ${quizDetails.duration}</p>
-      <p><strong>Total:</strong> ${quizDetails.totalMarks} marks</p>
+      <p><strong>Duration:</strong> ${"1 hour"}</p>
+      <p><strong>Total:</strong> ${totalMark} marks</p>
     `;
   }
-  
+  function getMarks(question){
+    console.log("my details : ",question);
+    var summ=Number(0);
+    for (const outerKey in question) {
+        if (question.hasOwnProperty(outerKey)) {
+         // console.log(`Outer Key: ${outerKey}`);
+      
+          const innerObject = question[outerKey];
+      
+          // Iterate over the inner object
+          for (const innerKey in innerObject) {
+            if (innerObject.hasOwnProperty(innerKey)) {
+              const innerValue = innerObject[innerKey];
+              console.log(`  Inner Key: ${innerKey}, Inner Value: ${innerValue}`);
+              if(innerKey==="mark"){
+                summ+=Number(innerValue);
+              }
+            }
+          }
+        }
+      }
+      return summ
+  }
   // Function to display quiz questions
   function displayQuizQuestions(questions) {
     const quizQuestionsContainer = document.querySelector('.quiz-questions');
