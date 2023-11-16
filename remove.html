@@ -6,9 +6,13 @@
     <title>LinkedList Visualization</title>
 
     <link rel="stylesheet" href="./remove.css" />
+    <link rel="stylesheet" href="./buttons.css" />
 
 </head>
 <style>
+    body {
+    background-color: lightblue;
+  }
     /* Style for the side panel */
     .side-panel {
         width: 0;
@@ -37,7 +41,7 @@
 
     /* Style for the button when the panel is open */
     .open-button.active {
-        transform: translateX(-600px);
+        transform: translateX(-500px);
     }
     
     /* Style for the arrow icon when the panel is open */
@@ -50,31 +54,48 @@
         padding: 20px;
         color: white;
     }
-    canvas {
-        border: 1px solid black;
-        background: pink;
-      }
+
+    .top-nav {
+      background-color: rgb(255, 255, 255);
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .logo {
+      max-width: 375px;
+      height: 50px;
+      border-radius: 20px;
+      left:0;
+  
+  }
 </style>
 <body>
+    <div class="top-nav">
+        <img class="logo" src="./runtime_logo.jpg"  style ="margin-left: 2%;" alt = "Logo">
+
+        <h2 style="margin-left:35%;">Removing</h2>
+    </div><br>
     <button class="open-button" onclick="toggleSidePanel()">
         <div class="arrow-icon">&#9660;</div>
     </button>
 
         <div id="canvas-and-controls">
-            <canvas id="linkedListCanvas" width="1000px" height="400"></canvas>
+            <canvas id="linkedListCanvas" class = "card" width="1000px" height="400"></canvas>
 
             <div class="controls">
-                <button id="popFrontButton">Pop Front</button>
-                <button id="popBackButton">Pop Back</button>
+                <button class="button-89" role="button" id="popFrontButton" style="margin-bottom: 10px;">
+                    Pop Front
+                </button>
+                <button class="button-89" role="button" id="popBackButton" style="margin-bottom: 10px;">
+                    Pop Back
+                </button>
                 <!-- Input field for specifying the index -->
-                <label for="indexInput">Enter Index:</label>
-                <input type="number" id="indexInput" min="0" step="1" value="0">
-                <button id="popButton">Pop Node at Index</button>
+                <label for="indexInput" style="font-family: 'Courier New', Courier, monospace;">Enter Index:</label>
+                <input type="number" style="font-family: 'Courier New', Courier; height: 20px;" id="indexInput" min="0" step="1" value="0">
+                <button class="button-89" role="button" id="popButton">Pop Node at Index</button>
             </div>
         </div>
-        <canvas id="myCanvas" width="700" height="300"></canvas>
-
-         <button id="pushFront">pushFront</button>
+        
 
         <div class="side-panel" id="mySidepanel">
             <!-- content goes here -->
@@ -86,18 +107,17 @@
         </div>
         
 
-     <script src="./pushFront.js"></script>
     <script src="./remove.js"></script>
     <script>
         function toggleSidePanel() {
             var sidePanel = document.getElementById("mySidepanel");
             var openButton = document.querySelector(".open-button");
     
-            if (sidePanel.style.width === "600px") {
+            if (sidePanel.style.width === "490px") {
                 sidePanel.style.width = "0";
                 openButton.classList.remove("active");
             } else {
-                sidePanel.style.width = "600px";
+                sidePanel.style.width = "490px";
                 openButton.classList.add("active");
             }
         }
