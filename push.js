@@ -422,3 +422,10 @@ const standaloneNodeY = lastNodeY;
 // Draw standalone node
 ctx.strokeRect(standaloneNodeX, standaloneNodeY, nodeWidth, nodeHeight);
 ctx.fillText("New Node", standaloneNodeX + 10, standaloneNodeY + 15);*/
+module.exports = keepPanelOpen;
+
+// module.exports = LinkedList;
+module.exports = drawLinkedList;
+module.exports =drawArrowWithTriangle;
+module.exports = drawFNode;
+module.exports =drawForwardLinkedList;
