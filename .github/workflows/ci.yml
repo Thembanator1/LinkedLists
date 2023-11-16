@@ -11,19 +11,19 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '20.x'
 
       - name: Install JavaScript dependencies
-        run: npm install
+        run: npm install && npm install --save-dev jest
 
       - name: Run JavaScript tests
-        run: npm test
+        run: npm test --coverage
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CWENGA_WAS_HERE}}
-          files:
-            npm jest --coverage
+      # - name: Upload coverage to Codecov
+      #   uses: codecov/codecov-action@v3
+      #   with:
+      #     token: ${{ secrets.CWENGA_WAS_HERE}}
+      #     files:
+      #       npx jest --coverage
            
-          verbose: true
+          # verbose: true
