@@ -6,14 +6,95 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Student Interface</title>
   <link rel="stylesheet" href="studentStyles.css">
+  <style>
+    /* Style for the side panel */
+    .side-panel {
+        width: 0;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgb(17, 36, 141);
+        overflow-x: hidden;
+        transition: 0.5s;
+    }
+
+    /* Style for the button that opens the side panel */
+    .open-button {
+        position: fixed;
+        top: 5px;
+        left: 5px;
+        font-size: 20px;
+    }
+
+    /* Style for the arrow icon */
+    .arrow-icon {
+        transform: rotate(90deg);
+        transition: 0.3s;
+    }
+
+    /* Style for the button when the panel is open */
+    .open-button.active {
+        transform: translateX(245px);
+    }
+    
+    /* Style for the arrow icon when the panel is open */
+    .open-button.active .arrow-icon {
+        transform: rotate(270deg);
+    }
+
+    .side-panel button{
+      width: 100%;
+      cursor: pointer;
+      padding: 10px;
+      margin-bottom: 5px;
+      background-color: cyan;
+      border-radius: 5px;
+      transition: background-color 0.3s ease-in-out;
+    }
+    .content-container.active{
+      transform: translateX(250px);
+    }
+
+  </style>
 </head>
 <body>
-    <h1>  Available Quizzes</h1>
-  <div id="quizListContainer" class="quiz-list-container"></div>
-  <div id="quizListContainer1" class="quiz-list-container1"></div>
+  <button class="open-button" onclick="toggleSidePanel()">
+    <div class="arrow-icon">&#9660;</div>
+  </button>
+
+  <div class="side-panel" id="mySidepanel">
+    <button onclick="window.location.href='../push.html'">LinkedList PushFunctions</button>
+    <button onclick="window.location.href='../remove.html'">LinkedList PopFunctions</button>
+    <button onclick="window.location.href='../javascript/first.html'">Practise LinkedLists</button>
+  </div>
+  <div class="content-container">
+    <br><h1>  Available Quizzes</h1>
+    <div id="quizListContainer" class="quiz-list-container"></div>
+    <div id="quizListContainer1" class="quiz-list-container1"></div>
+  </div>
+    
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   <script type="module" src="students.js"></script>
+  <script>
+    function toggleSidePanel() {
+            var sidePanel = document.getElementById("mySidepanel");
+            var openButton = document.querySelector(".open-button");
+            var quizzes = document.querySelector(".content-container");
+
+            if (sidePanel.style.width === "240px") {
+                sidePanel.style.width = "0";
+                openButton.classList.remove("active");
+                quizzes.classList.remove("active");
+            } else {
+                sidePanel.style.width = "240px";
+                openButton.classList.add("active");
+                quizzes.classList.add("active");
+            }
+        }
+  </script>
+
 </body>
 </html>
