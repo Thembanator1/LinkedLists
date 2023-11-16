@@ -24,6 +24,6 @@ jobs:
         with:
           token: ${{ secrets.CWENGA_WAS_HERE}}
           files:
-            npx jest --coverage
+            npm jest --coverage
            
           verbose: true
