@@ -52,19 +52,23 @@ onValue(quizzesRef, (snapshot) => {
 // Function to process quiz details and get correct answers
 function processQuizDetails(dic2) {
   const result = [];
-
+  var results;
   // Iterate over each question in dic2
   for (const questionKey in dic2.questions) {
     if (dic2.questions.hasOwnProperty(questionKey)) {
       const questionData = dic2.questions[questionKey];
-
+      console.log("my data : " ,questionData);
+      if(questionData.type!=="longQuestion"){
+        results=getCorrectAnswers(dic2.answers, questionData.text);
+      }
       // Create an object in the format of dic1
       const processedQuestion = {
         type: questionData.type,
         text: questionData.text,
         options: questionData.options.slice(), // Copy the options array
         image: questionData.image,
-        correctAnswers: getCorrectAnswers(dic2.answers, questionData.text),
+        correctAnswers: results || [],
+        mark: questionData.mark
       };
 
       // Add the object to the result array
@@ -90,7 +94,7 @@ function displayQuestion(question) {
   questionDiv.classList.add('question');
 
   // Display the question text
-  questionDiv.innerHTML = `<strong>${question.text}</strong><br>`;
+  questionDiv.innerHTML = `<strong>${question.text}</strong>( ${question.mark} marks)<br>`;
 
   // Display the image if available
   if (question.image) {
@@ -133,6 +137,7 @@ for (const question of processedQuestions) {
   displayQuestion(question);
   console.log('Question Details:');
   console.log('Type:', question.type);
+  console.log('Mark:', question.mark);
   console.log('Text:', question.text);
   console.log('Options:', question.options);
   console.log('Image:', question.image);
