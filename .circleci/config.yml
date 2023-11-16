@@ -16,7 +16,8 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies
 
-      - run: npm install   && npm install --save-dev jest && ln -s ./node_modules/.bin/jest jest
+      - run: npm install   && npm install --save-dev jest && npx install -g jest
+
 
       - save_cache:
           paths:
@@ -25,7 +26,7 @@ jobs:
 
       - run:
           name: "Run Jest and Collect Coverage Reports"
-          command: yarn jest --collectCoverage=true
+          command: jest --collectCoverage=true
       - store_artifacts:
           path: coverage
 
