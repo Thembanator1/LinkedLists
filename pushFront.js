@@ -87,6 +87,9 @@ class Node {
     }
   }
 
+
+  module.exports = drawLinkedList;
+
   // Function to draw the head pointer
   function drawHeadPointer(name, x, y, check) {
     ctx1.fillStyle = "green";
