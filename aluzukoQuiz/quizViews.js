@@ -17,9 +17,12 @@ const firebaseConfig = {
   // Global list to store all quiz questions
   const allQuestions = [];
   var totalMark=0;
+  var globalMark=0;
+  var nameOfquiz;
   // Get the quiz ID from local storage
   const quizId = localStorage.getItem('quizId');
-  
+  // Get the value from local storage
+const studentNumber = localStorage.getItem('myKey');
   // Check if quizId is present
   if (quizId) {
     // Reference to the specific quiz in the database
@@ -42,6 +45,7 @@ const firebaseConfig = {
   // Function to display quiz details in the header
   function displayQuizDetails(quizDetails) {
     const header = document.querySelector('.header');
+    nameOfquiz=quizDetails.quizName;
     header.innerHTML += `
       <h2>${quizDetails.quizName}</h2>
       <p><strong>Course Name:</strong> ${"Data Structure and algorithms"}</p>
@@ -181,45 +185,74 @@ const firebaseConfig = {
   // Event listener for the submitQuiz button
   document.getElementById('submitQuiz').addEventListener('click', () => {
     submitQuiz();
-    gradeQuiz(); // Call the gradeQuiz function after submitting the quiz
+   // gradeQuiz(); // Call the gradeQuiz function after submitting the quiz
+    alert(globalMark);
   });
   
-  // Function to submit the quiz and disable input elements
-  function submitQuiz() {
+ // Function to submit the quiz and disable input elements
+function submitQuiz() {
     const quizQuestionsContainer = document.querySelector('.quiz-questions');
-  
-    quizQuestionsContainer.childNodes.forEach((questionDiv) => {
-      const inputElements = questionDiv.querySelectorAll('input, textarea');
-      inputElements.forEach(input => {
-        input.disabled = true;
-      });
+
+    quizQuestionsContainer.childNodes.forEach((questionDiv, index) => {
+        const inputElements = questionDiv.querySelectorAll('input, textarea');
+        inputElements.forEach(input => {
+            input.disabled = true;
+        });
     });
-  }
+
+    // Collect student responses
+    const studentResponses = allQuestions.map((question, index) => {
+        const questionDiv = document.querySelector(`.quiz-questions div:nth-child(${index + 1})`);
+        let response = null;
+
+        if (question.type === 'longQuestion') {
+            response = questionDiv.querySelector('textarea').value.trim();
+        } else if (question.type === 'multipleChoice' || question.type === 'multiAnswer') {
+            const selectedOptions = questionDiv.querySelectorAll('input:checked');
+            response = Array.from(selectedOptions).map(option => option.value);
+        }
+
+        return response;
+    });
+    gradeQuiz(); // Call the gradeQuiz function after submitting the quiz
+    // Get the student number from local storage
+    const studentNumber ="2456615"; //localStorage.getItem('myKey');
+    //globalMark=totalMarks;
+    // Insert quiz details into the student database
+    insertQuizDetailsToDatabase(allQuestions, studentResponses, studentNumber);
+}
+
+  var num=0;
   
   // Function to grade the quiz and display marks
   function gradeQuiz() {
     let totalMarks = 0;
   
     allQuestions.forEach((question, index) => {
+        console.log("check : ",question.type," : ",index);
       const questionDiv = document.querySelector(`.quiz-questions div:nth-child(${index + 1})`);
   
       let isCorrect = false;
-      const responseType = questionDiv.classList.contains('long-question-container') ? 'longQuestion' : 'multipleChoice';
-  
-      if (responseType === 'longQuestion') {
+      const responseType = question.type;
+       //alert("responseType : ",responseType);
+      if (question.type === 'longQuestion') {
         const studentResponse = questionDiv.querySelector('textarea').value.trim();
         isCorrect = checkLongAnswer(question.correctAnswers, studentResponse);
-      } if(responseType === 'multipleChoice') {
+      } if(question.type === 'multipleChoice') {
         const selectedOption = questionDiv.querySelector('input:checked');
         const studentResponse = selectedOption ? selectedOption.value : null;
         isCorrect = checkMultipleChoiceAnswer(question.correctAnswers, studentResponse);
-      }else{
+      }if(question.type === 'multiAnswer'){
+       // alert("here");
         const selectedOptions = questionDiv.querySelectorAll('input:checked');
         const studentResponses = Array.from(selectedOptions).map(option => option.value);
   
-        isCorrect = checkMultipleAnswer(question.correctAnswers, studentResponses);
+        question.mark,isCorrect = checkMultipleAnswer(question.correctAnswers, studentResponses,question,questionDiv);
+        //alert(question.mark);
       }
-  
+      if(question.type === 'multiAnswer'){
+        question.mark=num;
+      }
       totalMarks += Number(isCorrect) ? Number(question.mark) : 0;
   
       // Display check mark or X next to the selected option
@@ -227,6 +260,8 @@ const firebaseConfig = {
     });
   
     // Display total marks
+     globalMark=totalMarks;
+     alert(globalMark);
     alert(`Your total marks: ${totalMarks}`);
   }
   
@@ -245,28 +280,27 @@ const firebaseConfig = {
     return correctAnswers.includes(studentResponse);
   }
 
-  // Function to check multiple-answer questions
-function checkMultipleAnswer(correctAnswers, studentResponses) {
-    let questionMark = 0;
-    // questionMark=question.mark / correctAnswers.length;
-    
-   // alert(questionMark);
+ // Function to check multiple-answer questions
+function checkMultipleAnswer(correctAnswers, studentResponses, question, questionDiv) {
+    let questionMark = Number(question.mark);
+    //alert(questionMark);
+  
     studentResponses.forEach((chosenOption) => {
       const isCorrect = correctAnswers.includes(chosenOption);
   
       if (!isCorrect) {
-        // Subtract from the right ones until the mark for the question is zero
-        questionMark -= Number(question.mark) / correctAnswers.length;
-        console.log(questionMark);
-      }else{
-        questionMark += Number(question.mark) / correctAnswers.length;
+        // Subtract a fixed amount for each wrong answer
+        questionMark =Number(questionMark)- Number(question.mark) / Number(correctAnswers.length);
       }
+      //alert(questionMark);
     });
-  
+    //alert(questionMark);
+    num=questionMark;
     // Display check mark or X based on the marking criteria
     displayResultIcon(questionDiv, questionMark, correctAnswers.length);
     return questionMark > 0; // Return true if questionMark is greater than 0, false otherwise
   }
+  
   // Function to display check mark or X next to the selected option
 function displayResultIcon1(questionDiv, isCorrect) {
     const resultIcon = document.createElement('span');
@@ -280,7 +314,7 @@ function displayResultIcon(questionDiv, questionMark, correctAnswersCount) {
     const resultIcon = document.createElement('span');
     resultIcon.classList.add('result-icon');
   
-    if (questionMark === question.mark) {
+    if (questionMark === correctAnswersCount.mark) {
       // All chosen options are correct
       resultIcon.textContent = '✔';
       resultIcon.style.color = 'black';
@@ -296,4 +330,21 @@ function displayResultIcon(questionDiv, questionMark, correctAnswersCount) {
   
     questionDiv.appendChild(resultIcon);
   }
-  
+  function insertQuizDetailsToDatabase(allQuestions, studentResponses, studentNumber) {
+    const studentQuizRef = database.ref(`students/quizzes/${studentNumber}`);
+    const quizDetails = {
+        questions: allQuestions,
+        responses: studentResponses,
+        finalMark:globalMark,
+        quizName:nameOfquiz,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+    };
+
+    studentQuizRef.push(quizDetails)
+        .then(() => {
+            console.log('Quiz details inserted into the student database successfully.');
+        })
+        .catch((error) => {
+            console.error('Error inserting quiz details into the student database:', error);
+        });
+}

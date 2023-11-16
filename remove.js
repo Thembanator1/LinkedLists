@@ -179,7 +179,7 @@ class LinkedList {
         let current = this.head;
         let previous = null;
 
-        if(this.size === 1){
+        if(this.size === 1){//If the Head is the Tail
             steps = popBackSteps2;
             const executeNextStep = () => {
                 const step = steps[0];
@@ -238,49 +238,28 @@ class LinkedList {
                 }
             };
     
-            
-            const executeNextStep = () => {
-                const step = steps[0];
+            const step = steps[0];
+            highlightLine(step.index);
+            showExplanation(step.index, step.explanation);
+            setTimeout(() => {
+                traverseAndHighlight(); 
+                const step = steps[1];
                 highlightLine(step.index);
                 showExplanation(step.index, step.explanation);
-                //Delay 5 seconds so first explanation appears long enough
-                setTimeout(() => {
-                    if (currentStep < totalSteps) {
-                        currentStep++; // from 0 to 1
-                        if (currentStep === 1) {
-                            // When at the second explanation, perform traversal with green and red highlighting
-                            const step = steps[currentStep];
-                            highlightLine(step.index);
-                            showExplanation(step.index, step.explanation);
-                            traverseAndHighlight(() => {
-                                this.basicPopBack();
-                            });
-                            currentStep++;
-                        }
-                        if(currentStep == totalSteps-1){
-                            setTimeout(() => {
-                                let step = steps[currentStep];
-                                highlightLine(step.index);
-                                    console.log(step.index)
-                                    console.log(step)
-                                showExplanation(step.index, step.explanation);
-                                this.basicPopBack();
-                            }, 3000);
-                        }
-            
-                        //currentStep++;
-                    }
-                    setTimeout(() => {
-                        const step = popBackSteps2[4];
-                        highlightLine(step.index);
-                        showExplanation(step.index, step.explanation);
-                        
-                    }, 5000);
-                }, 3000);
-            };
-        
-            // Start the code trace animation
-            executeNextStep();
+            }, 4000);
+            setTimeout(() => {
+                let step = steps[2];
+                highlightLine(step.index);
+                showExplanation(step.index, step.explanation);
+                this.basicPopBack();
+            }, 8000);
+            setTimeout(() => {
+                const step = popBackSteps2[4];
+                highlightLine(step.index);
+                showExplanation(step.index, step.explanation);
+                
+            }, 12000);
+
         }
         
     }

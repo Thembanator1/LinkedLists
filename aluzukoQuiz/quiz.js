@@ -1,23 +1,19 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
-import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-database.js";
-
 // Firebase configuration
 const firebaseConfig = {
-    //   copy your firebase config informations
-    apiKey: "AIzaSyBiQr7aHxdYxk8sCkHxMebkVyBEgXCnknU",
-  authDomain: "online-store-b90ca.firebaseapp.com",
-  databaseURL: "https://online-store-b90ca-default-rtdb.firebaseio.com",
-  projectId: "online-store-b90ca",
-  storageBucket: "online-store-b90ca.appspot.com",
-  messagingSenderId: "160581372978",
-  appId: "1:160581372978:web:b507d7ac5f14c9e4ff002b",
-  measurementId: "G-PH4QNCPP2J"
-  };
+  //   copy your firebase config informations
+  apiKey: "AIzaSyBiQr7aHxdYxk8sCkHxMebkVyBEgXCnknU",
+authDomain: "online-store-b90ca.firebaseapp.com",
+databaseURL: "https://online-store-b90ca-default-rtdb.firebaseio.com",
+projectId: "online-store-b90ca",
+storageBucket: "online-store-b90ca.appspot.com",
+messagingSenderId: "160581372978",
+appId: "1:160581372978:web:b507d7ac5f14c9e4ff002b",
+measurementId: "G-PH4QNCPP2J"
+};
 
 // Initialize Firebase
-const firebaseApp = initializeApp(firebaseConfig);
-const database = getDatabase(firebaseApp);
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
 // DOM elements
 const newQuizButton = document.getElementById('newQuizButton');
@@ -30,11 +26,9 @@ newQuizButton.addEventListener('click', () => {
   alert('Redirect to the new quiz page or perform any other action.');
 });
 
-// ...
-
 // Fetch and display the list of quizzes
-const quizzesRef = ref(database, 'quizzes');
-onValue(quizzesRef, (snapshot) => {
+const quizzesRef = firebase.database().ref('quizzes');
+quizzesRef.on('value', (snapshot) => {
   const quizzes = snapshot.val();
   quizList.innerHTML = '';
 
@@ -49,6 +43,7 @@ onValue(quizzesRef, (snapshot) => {
     });
   }
 });
+
 // Function to process quiz details and get correct answers
 function processQuizDetails(dic2) {
   const result = [];
@@ -79,10 +74,8 @@ function processQuizDetails(dic2) {
   return result;
 }
 
-
 // Function to get correct answers for a specific question
 function getCorrectAnswers(answers, questionText) {
-  
   return answers
     .filter((answer) => answer.question === questionText)
     .map((answer) => answer.option);
@@ -124,29 +117,27 @@ function displayQuestion(question) {
   questionList.appendChild(questionDiv);
 }
 
-
 function getCurrentQuestionType() {
   return document.getElementById('questionType').value;
 }
+
 // Function to show quiz details in a popup
 function showQuizDetails(quizDetails) {
   questionList.innerHTML = '';
   const processedQuestions = processQuizDetails(quizDetails);
-console.log("question : ",processedQuestions);
-for (const question of processedQuestions) {
-  displayQuestion(question);
-  console.log('Question Details:');
-  console.log('Type:', question.type);
-  console.log('Mark:', question.mark);
-  console.log('Text:', question.text);
-  console.log('Options:', question.options);
-  console.log('Image:', question.image);
-  console.log('Correct Answers:', question.correctAnswers);
-  console.log('------------------------');
-}
-   
+  console.log("question : ",processedQuestions);
+  for (const question of processedQuestions) {
+    displayQuestion(question);
+    console.log('Question Details:');
+    console.log('Type:', question.type);
+    console.log('Mark:', question.mark);
+    console.log('Text:', question.text);
+    console.log('Options:', question.options);
+    console.log('Image:', question.image);
+    console.log('Correct Answers:', question.correctAnswers);
+    console.log('------------------------');
   }
-  
+}
 
 // Function to close the popup
 function closePopup() {
@@ -154,4 +145,105 @@ function closePopup() {
   if (popup) {
     document.body.removeChild(popup);
   }
+}
+
+
+
+
+const generateFeedbackButton = document.getElementById('generateFeedback');
+
+// Event listener for the generateFeedback button
+generateFeedbackButton.addEventListener('click', () => {
+  // Fetch and display quiz names in a popup
+  fetchAndDisplayQuizNames();
+});
+
+// Function to fetch and display quiz names in a popup
+function fetchAndDisplayQuizNames() {
+  const quizNamesPopup = document.createElement('div');
+  quizNamesPopup.classList.add('popup');
+  quizNamesPopup.innerHTML = '<h2>Quiz Names</h2>';
+
+  // Fetch quiz names
+  const quizzesRef = database.ref('quizzes');
+  quizzesRef.once('value', (snapshot) => {
+    const quizzes = snapshot.val();
+    console.log(quizzes);
+    if (quizzes) {
+      const quizNames = Object.keys(quizzes);
+
+      // Display each quiz name as a clickable item
+      quizNames.forEach((quizName) => {
+        const quizItem = document.createElement('div');
+        quizItem.classList.add('quiz-item');
+        quizItem.textContent = quizzes[quizName].quizName;
+        quizItem.addEventListener('click', () => fetchAndDisplayFeedback(getName(quizName)));
+        quizNamesPopup.appendChild(quizItem);
+      });
+
+      document.body.appendChild(quizNamesPopup);
+    }
+  });
+}
+
+// Function to fetch and display feedback for a specific quiz
+// Function to fetch and display feedback for a specific quiz
+function fetchAndDisplayFeedback(quizName1) {
+  // Fetch feedback for the selected quiz
+  const studentsRef = database.ref(`students/quizzes`);
+  studentsRef.once('value', (snapshot) => {
+    const quizzesTaken = snapshot.val();
+    var text;
+    var i=10;
+    // Create a new jsPDF instance
+   const pdf = new jsPDF();
+      pdf.text("Student Number       Mark   ",10,i);
+    // Iterate through each student
+    for (const studentNumber in quizzesTaken) {
+      if (quizzesTaken.hasOwnProperty(studentNumber)) {
+        const studentQuizzes = quizzesTaken[studentNumber];
+
+        // Iterate through each quiz for the current student
+        for (const quizKey in studentQuizzes) {
+          if (studentQuizzes.hasOwnProperty(quizKey)) {
+            const quizDetails = studentQuizzes[quizKey];
+            const quizName = quizDetails.quizName;
+            const finalMark = quizDetails.finalMark;
+            if(quizName === quizName1){
+              i=i+10;
+              text=+studentNumber+  "                    "+finalMark;
+            }
+            // Attach a listener to the current quiz
+            const currentQuizRef = database.ref(`students/quizzes/${studentNumber}/${quizKey}`);
+            currentQuizRef.on('value', (quizSnapshot) => {
+              // Do something with the quiz data
+              if (quizName === quizName1) {
+                console.log(`Student: ${studentNumber}, Quiz: ${quizName}, Mark:${finalMark}`);
+                //console.log('Quiz Data:', quizSnapshot.val());
+
+                // Append the data to the PDF
+              
+              }
+            });
+          }
+        }
+      }
+    }
+  // console.log(text);
+   pdf.text(text,10,20);
+    // Save the PDF and allow the user to download it
+    pdf.save(quizName1+'.pdf');
+  });
+}
+
+
+function getName(quizId)
+{ var name;
+  const studentsRef = database.ref(`quizzes/`+quizId);
+  studentsRef.once('value', (snapshot) => {
+    const quizzesTaken = snapshot.val();
+    name =quizzesTaken.quizName;
+  });
+   return name;
+
 }
