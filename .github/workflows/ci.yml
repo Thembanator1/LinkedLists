@@ -17,7 +17,7 @@ jobs:
         run: npm install 
         
       - name : Install jest save-dev
-        run: npm install --save-dev jest
+        run: node --version
 
       - name: Run JavaScript tests
         run: npm test --coverage
