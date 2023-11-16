@@ -1,10 +1,5 @@
 // push.test.js
-
-// Import the necessary modules
-import '@testing-library/jest-dom';
-import { fireEvent, screen } from '@testing-library/dom';
-// import { displayPushBackCode, displayPushFrontCode, displayPopBackCode, displayPopFrontCode, highlightLine, showExplanation } from './push'; // Replace with the actual file name
-
+const v = require('./push');
 // Mocking the necessary DOM elements
 document.body.innerHTML = `
   <div class="pop-code-container"></div>
