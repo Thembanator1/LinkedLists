@@ -15,7 +15,7 @@ jobs:
           node-version: '14'
 
       - name: Install JavaScript dependencies
-        run: npm install
+        run: npm int && npm install  && npm install --save-dev jest
 
       - name: Run JavaScript tests
         run: npm test
