@@ -2,19 +2,23 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-    background-color: pink;
+    background-color: rgb(223, 199, 157);
   }
+  
   
   .quiz-item {
     cursor: pointer;
     padding: 10px;
     margin-bottom: 5px;
-    background-color: cyan;
-    border-radius: 5px;
+    background-color: inherit;
+    border: 1px solid rgb(126, 99, 58);
+    border-radius: 20px;
     transition: background-color 0.3s ease-in-out;
   }
   
   .quiz-item:hover {
-    background-color: #e0e0e0;
+    border: 1px solid #73BEC8;
+  cursor: pointer;
+  color: #73BEC8;
   }
   

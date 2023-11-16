@@ -7,7 +7,7 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: pink;
+      background-color: rgb(223, 199, 157);
       text-align: center;
       margin: 0;
       padding: 0;
@@ -19,6 +19,8 @@
       align-items: center;
       justify-content: center;
       height: 100vh;
+      color: rgb(88, 65, 29);
+      font-family: italic;
     }
 
     .button {
@@ -27,19 +29,26 @@
       font-size: 18px;
       text-align: center;
       text-decoration: none;
-      color: #fff;
-      background-color: #00bcd4;
-      border-radius: 5px;
+      color: rgb(126, 99, 58);
+      background-color: inherit;
+      border: 1px solid rgb(126, 99, 58);
+      border-radius: 20px;
       margin: 10px;
       cursor: pointer;
     }
 
+    .button:hover {
+  border: 1px solid #73BEC8;
+  cursor: pointer;
+  color: #73BEC8;
+}
+
     .button.student {
-      background-color: #00bcd4;
+      background-color: inherit;
     }
 
     .button.lecturer {
-      background-color: #00bcd4;
+      background-color: inherit;
     }
   </style>
 </head>

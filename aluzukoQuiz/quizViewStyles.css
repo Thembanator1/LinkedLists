@@ -3,11 +3,11 @@ body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: pink;
+    background-color: rgb(223, 199, 157);
   }
   
   .header {
-    background-color: #3498db;
+    background-color: rgb(223, 199, 157);
     color: #fff;
     padding: 20px;
     text-align: center;
@@ -31,18 +31,20 @@ body {
   }
   
   button {
-    background-color: #2ecc71;
-    color: #fff;
-    padding: 10px 20px;
+    background-color: inherit;
+    color: rgb(126, 99, 58);
+    padding: .25rem 3rem;
+    border-radius: 20px;
     font-size: 16px;
     cursor: pointer;
-    border: none;
+    border: 1px solid rgb(126, 99, 58);
     border-radius: 5px;
     margin: 20px;
   }
   
   button:hover {
-    background-color: #27ae60;
+    border: 1px solid #73BEC8;
+    background-color: #73BEC8;
   }
   .question-image {
     max-width: 300px;

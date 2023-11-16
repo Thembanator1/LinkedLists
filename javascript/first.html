@@ -12,7 +12,7 @@
         align-items: flex-start;
         height: 100vh;
         margin: 0;
-        background-color: pink;
+        background-color: rgb(223, 199, 157);
     }
 
     div {
@@ -29,33 +29,39 @@
     input[type="button"] {
         font-size: 16px;
         font-family: 'Arial', sans-serif;
-        background-color: #4CAF50;
-        color: white;
+        background-color: inherit;
+        color: rgb(126, 99, 58);
         padding: 12px 20px;
-        border: none;
-        border-radius: 4px;
+        border: 1px solid rgb(126, 99, 58);
+        border-radius: 20px;
         cursor: pointer;
         margin-right: 10px;
+        
     }
+    input:hover {
+    border: 1px solid #73BEC8;
+    cursor: pointer;
+    color: #73BEC8;
+  }
 
     /* Style for the "Generate Questions" and "Save Questions" buttons */
     #toggleButton, #loginButton {
-        background-color: #008CBA; /* Change color as needed */
+        background-color: inherit; /* Change color as needed */
     }
 
     /* Style for the "Delete Node" button */
     #deleteNodeBtn {
-        background-color: #FF4500; /* Change color as needed */
+        background-color: inherit; /* Change color as needed */
     }
 
     /* Style for the "Memory" button */
     #drawBtn {
-        background-color: #9932CC; /* Change color as needed */
+        background-color: inherit; /* Change color as needed */
     }
 
     /* Style for the "Test" button */
     #testBtn {
-        background-color: #FF8C00; /* Change color as needed */
+        background-color: inherit; /* Change color as needed */
     }
 
         canvas {
