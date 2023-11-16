@@ -1,0 +1,14 @@
+{
+  "name": "runtime-terrors",
+  "version": "1.0.0",
+  "description": "runtime-terrors",
+  "main": "push.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "The Terrors",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
