@@ -330,7 +330,7 @@ function keepPanelOpen(){
     var sidePanel = document.getElementById("mySidepanel");
     var openButton = document.querySelector(".open-button");
     
-    sidePanel.style.width = "600px";
+    sidePanel.style.width = "490px";
     openButton.classList.add("active");    
 }
 const popFrontButton = document.getElementById("popFrontButton");

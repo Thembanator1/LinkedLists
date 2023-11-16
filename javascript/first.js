@@ -314,7 +314,7 @@ function test(testType){
 
     var len = toAdd.length;
     var addInt = 0;
-
+    if(len!=0){
     for (let i = 0; i < len; i++) {
         var add = unitTest.testAdd(toAdd[i]);
 
@@ -325,45 +325,76 @@ function test(testType){
         }
     
         else{
+            if(add =="true1"){
+                alert("tail has not been set a previous pointer");
+                addInt = addInt + 0.5;
+            }
+            if(add =="true2"){
+                alert("previous pointer has not been added on the node");
+                addInt = addInt + 0.5;
+            }
 
-            alert("False incorrect / no node was added"  + toAdd[i] );
+            if(add =="false"){
+                alert("False incorrect / no node was added"  + toAdd[i] );
+            }
+
+            
             
         }
     }
+    }
+
     var len2 = ToRemove.length;
     var removeInt = 0;
+    if(len2 !=0){
+    
     for (let i = 0; i < len2; i++) {
         var remove = unitTest.testRemove(ToRemove[i]);
 
         if(remove == "true"){
-
             removeInt = removeInt + 1; 
-           
-
         }
     
         else{
-
-            alert("The node was not removed " + ToRemove[i]);
+            if(remove =="false1"){
+                alert("tail has not been set a previous pointer");
+                addInt = addInt + 0.5;
+            }
+            else{
+                alert("The node was not removed " + ToRemove[i]);
+            }
+            
 
         }
     }
 
-        var len3 = 0;
-    
+    }
+        var len3 = -1;
+        if(toAddback != null){
         var addB = unitTest.testAddFront(toAddback);
         if(addB =="true"){
             len3 = 100;
          
         }
         else{
-            len3 = 0;
+            if(add =="true1"){
+                alert("tail has not been set a previous pointer");
+                len3 = len3 + 50;
+            }
+            else{
+                alert("False incorrect / no node was added");
+                len3 = 0;
+            }
+            
            
         }
+    }
 
     
+        
 
-        var len4 = 0;
+        
+        var len4 = -1;
         if(toRemoveBack != null){
         var removeB = unitTest.testRemoveBack(toRemoveBack);
         if(removeB == "true"){
@@ -372,25 +403,52 @@ function test(testType){
             
         }
         else{
-
-            len4 = 0;
+            if(removeB=="false1"){
+                alert("head does not point to the next node");
+                len4 = 50;
+            }
+            if(removeB=="false2"){
+                alert("tail does not point to the prev node");
+                len4 = 50;
+            }
+            if(removeB=="false"){
+                alert("failed to remove node");
+                len4 = 0;
+            }
+            
             
         }
 
-    }
+      }
+    
 
-        var len5 = 0;
+        var len5 = -1;
+        if(toAddfront != null){
         var AddNodeback = unitTest.testAddBack(toAddfront);
         
         if(AddNodeback == "true"){
             len5 = 100;
            
         }else{
+            if(AddNodeback =="true1"){
+             alert("failed to add a prev pointer on the node");
+             len5 = 50;
+            }
+            if(AddNodeback =="true2"){
+                alert("failed to add a prev pointer on the tail");
+                len5 = 50;
+               }
+            if(AddNodeback =="false"){
+            alert("failed to add the node at the back");
             len5 = 0;
+            }
+           
             
         }
 
-        var len6 = 0;
+    }
+
+        var len6 = -1;
         if(toRemoveFront != null){
         
         
@@ -400,6 +458,19 @@ function test(testType){
             len6 = 100;
         
         }else{
+            if(remFront == "false1"){
+                alert("Head does not lead to the next node");
+                len6 = 50;
+
+            }
+            if(remFront == "false2"){
+                alert("tail does not point to the prev node");
+                len6 = 50;
+            }
+            else{
+                alert("Failed to remove node");
+                len6 = 0; 
+            }
             len6 = 0;
           
         }
@@ -408,26 +479,85 @@ function test(testType){
 
     
     const scoreCard = document.getElementById('scoreCard');
-    const AddingScore = (addInt/len) * 100;
-    const RemoveScore = (removeInt/len2) * 100;
-    const ChangingScore = cMade ;
-    const Addingfront = len3;
-    const AddingBack = len5;
-    const poppingBack = len4;
-    const poppingFront = len6;
+    var AddingScore = -1;
+    if(len !=0){
+         AddingScore = (addInt/len) * 100;
+    }
+
+    var RemoveScore = -1;
+    if(len2!=0){
+        RemoveScore = (removeInt/len2) * 100;
+    }
+    
+    
+    var ChangingScore = cMade ;
+    var Addingfront = len3;
+    var AddingBack = len5;
+    var poppingBack = len4;
+    var poppingFront = len6;
  // const poppingFront = 
 
     // Calculate overall percentage
     const overallScore = (AddingScore + RemoveScore + ChangingScore) / 3;
   
     // Update HTML elements with calculated scores
-    document.getElementById('Adding-Score').textContent = AddingScore;
-    document.getElementById('Removing-Score').textContent = RemoveScore;
+    var scoreElement = document.getElementById('Adding-Score');
+    if(AddingScore != -1){
+        
+        scoreElement.textContent = AddingScore+ "%";;
+    }
+    else{
+        var AddContainer = document.getElementById('AddingContainer');
+        AddContainer.style.display = 'none';
+    }
+
+    var RemoveElement = document.getElementById('Removing-Score');
+    if(RemoveScore!= -1){
+        RemoveElement.textContent  = RemoveScore + "%";
+    }
+    else{
+        var RemoveContainer = document.getElementById('RemoveContainer');
+        RemoveContainer.style.display = 'none';
+        
+    }
+
+    var FrontElement = document.getElementById('Front-Score');
+    if(Addingfront!=-1){
+        FrontElement.textContent = Addingfront+ "%";;
+    }
+    else{
+        var PufrontContainer = document.getElementById('PufrontContainer');
+        PufrontContainer.style.display = 'none';
+    }
+
+    var PopElement = document.getElementById('pBack-Score');
+    if(poppingBack!= -1){
+        PopElement.textContent = poppingBack+ "%";;
+    }
+    else{
+        var PobehindContainer = document.getElementById('PobehindContainer');
+        PobehindContainer.style.display = 'none';
+    }
+
+    var addBackElement = document.getElementById('pushBack-Score');
+    if(AddingBack != -1){
+      addBackElement.textContent = AddingBack+ "%";;
+    }
+    else{
+        var PubehindContainer = document.getElementById('PubehindContainer');
+        PubehindContainer.style.display = 'none';
+    }
+
+    var popFrontElement = document.getElementById('popFront-Score');
+    if(poppingFront != -1){
+      popFrontElement.textContent = poppingFront+ "%";;
+    }
+    else{
+        var PoFrontContainer = document.getElementById('PoFrontContainer');
+        PoFrontContainer.style.display = 'none';
+    }
     document.getElementById('Changing-Score').textContent = ChangingScore;
-    document.getElementById('Front-Score').textContent = Addingfront;
-    document.getElementById('pBack-Score').textContent = poppingBack;
-    document.getElementById('pushBack-Score').textContent = AddingBack;
-    document.getElementById('popFront-Score').textContent = poppingFront;
+   
     scoreCard.style.display = scoreCard.style.display = 'block';
 }
 
@@ -449,6 +579,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("loginButton").addEventListener("click", function () {
         generateQuestions();
+    });
+
+    document.getElementById("InstructionsBtn").addEventListener("click", function () {
+        window.location.href = "instructions.html";
     });
      // Add click event listener to the button
 

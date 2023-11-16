@@ -31,7 +31,7 @@ class DoubleTests {
     testAdd(node){
         this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
-        
+        var Tailcheck = this.newNodes.find(node => node.name === "head");
         if(this.newNodes.length==this.oldNodes.length){
             return this.add;
         }
@@ -40,7 +40,19 @@ class DoubleTests {
             if(sourceNode.name ==node){
 
                 if(sourceNode.prev!=null){
-                    this.add = "true";
+                    while(Tailcheck.name !="tail" ){
+                       Tailcheck = this.newNodes.find(node => node.name === Tailcheck.next);
+                    }
+                    if(Tailcheck.prev !=null){
+                        this.add = "true";
+                    }
+                    else{
+                        this.add = "true1";
+                    }
+                    
+                }
+                else{
+                    this.add = "true2";
                 }
                 
                 break;
@@ -53,6 +65,7 @@ class DoubleTests {
     testAddFront(node){
         this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
+        var Tailcheck = this.newNodes.find(node => node.name === "head");
         if(this.newNodes.length==this.oldNodes.length){
             return this.add;
         }
@@ -61,7 +74,16 @@ class DoubleTests {
         sourceNode = this.newNodes.find(node => node.name === sourceNode.next);
             if(sourceNode.name ==node){
                 if(sourceNode.prev =="head"){
-                    this.add = "true";  
+                    while(Tailcheck.name !="tail" ){
+                        Tailcheck = this.newNodes.find(node => node.name === Tailcheck.next);
+                     }
+                     if(Tailcheck.prev !=null){
+                         this.add = "true";
+                     }
+                     else{
+                         this.add = "true1";
+                     }
+                      
                 }
                 
             }
@@ -80,7 +102,7 @@ class DoubleTests {
                 this.add = "false"; 
             }
             if(sourceNode.name!="head" && sourceNode.prev==null){
-                this.add = "false";
+                this.add = "false1";
             }
             sourceNode = this.newNodes.find(node => node.name === sourceNode.next);
         }
@@ -105,7 +127,7 @@ class DoubleTests {
             if(sourceNode.next =="tail"){
                 var curr = sourceNode.next;
                 if(curr.prev ==null){
-                    this.add = "false";  
+                    this.add = "false1";  
                 }
             }
             sourceNode = this.newNodes.find(node => node.name === sourceNode.next);
@@ -125,9 +147,10 @@ class DoubleTests {
 
         this.add = "true";
         var sourceNode = this.newNodes.find(node => node.name === "head");
+        var Tailcheck = this.newNodes.find(node => node.name === "head");
 
         if(sourceNode.next==null){
-            this.add = "false";
+            this.add = "false1";
             return this.add;
         }
         if(this.newNodes.length==this.oldNodes.length){
@@ -137,6 +160,15 @@ class DoubleTests {
         sourceNode = this.newNodes.find(node => node.name === sourceNode.next);
             if(sourceNode.name ==node){
                 this.add = "false";  
+            }
+            else{
+                while(Tailcheck.name !="tail" ){
+                    Tailcheck = this.newNodes.find(node => node.name === Tailcheck.next);
+                 }
+                 if(Tailcheck.prev !=null){
+                     this.add = "false2";
+                 }
+                 
             }
             
            
@@ -154,8 +186,18 @@ class DoubleTests {
         }
         while (sourceNode != null) {
             if(sourceNode.name ==node && temp.name =="tail"){
-                if(sourceNode.prev!=null){
+                
+                if(sourceNode.prev!=null && temp.prev ==node){
+                    
                     this.add = "true"; 
+                }
+                else{
+                    if(sourceNode.prev==null){
+                        this.add = "true1"; 
+                    }
+                    else{
+                        this.add = "true2";
+                    }
                 }
                
             }

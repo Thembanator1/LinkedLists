@@ -49,36 +49,40 @@ onValue(quizzesRef, (snapshot) => {
     });
   }
 });
+// Function to process quiz details and get correct answers
 function processQuizDetails(dic2) {
   const result = [];
-
+  var results;
   // Iterate over each question in dic2
   for (const questionKey in dic2.questions) {
     if (dic2.questions.hasOwnProperty(questionKey)) {
       const questionData = dic2.questions[questionKey];
-
+      console.log("my data : " ,questionData);
+      if(questionData.type!=="longQuestion"){
+        results=getCorrectAnswers(dic2.answers, questionData.text);
+      }
       // Create an object in the format of dic1
       const processedQuestion = {
         type: questionData.type,
         text: questionData.text,
         options: questionData.options.slice(), // Copy the options array
         image: questionData.image,
-        correctAnswers: getCorrectAnswers(dic2.answers, questionData.text),
+        correctAnswers: results || [],
+        mark: questionData.mark
       };
 
       // Add the object to the result array
       result.push(processedQuestion);
-
-      // Remove the question and its content from dic2
-      //delete dic2.questions[questionKey];
     }
   }
 
   return result;
 }
 
+
 // Function to get correct answers for a specific question
 function getCorrectAnswers(answers, questionText) {
+  
   return answers
     .filter((answer) => answer.question === questionText)
     .map((answer) => answer.option);
@@ -90,7 +94,7 @@ function displayQuestion(question) {
   questionDiv.classList.add('question');
 
   // Display the question text
-  questionDiv.innerHTML = `<strong>${question.text}</strong><br>`;
+  questionDiv.innerHTML = `<strong>${question.text}</strong>( ${question.mark} marks)<br>`;
 
   // Display the image if available
   if (question.image) {
@@ -133,56 +137,14 @@ for (const question of processedQuestions) {
   displayQuestion(question);
   console.log('Question Details:');
   console.log('Type:', question.type);
+  console.log('Mark:', question.mark);
   console.log('Text:', question.text);
   console.log('Options:', question.options);
   console.log('Image:', question.image);
   console.log('Correct Answers:', question.correctAnswers);
   console.log('------------------------');
 }
-    //console.log('Quiz Details:', quizDetails); // Add this line for debugging
-     
-   /* // Create and display a full-screen popup with quiz details
-    const popup = document.createElement('div');
-    popup.classList.add('popup');
-    
-    const questions = quizDetails.questions || {};
-    const questionKeys = Object.keys(questions);
-   // console.log('Question Details:', questionKeys);
-  
-
-    const answers = quizDetails.answers || {};
-    const answersKeys = Object.keys(answers);
-
-   //console.log('Answers:', answers); // Add this line for debugging
-  
-    // Generate HTML for displaying questions
-    const questionsHTML = questionKeys.map((questionKey, index) => {
-      const questionNumber = index + 1;
-      const question = questions[questionKey];
-      const correctAnswers = question.options.filter(opt => opt.correct).map(opt => opt.text).join(', ');
-  
-      return `
-        <div class="question">
-          <strong>Question ${questionNumber}:</strong><br>
-          ${question.text}<br>
-          Correct answers: ${correctAnswers}
-        </div>
-      `;
-    }).join('');
-  
-    //console.log('Questions HTML:', questionsHTML); // Add this line for debugging
-  
-    popup.innerHTML = `
-      <div class="popup-content">
-        <h2>${quizDetails.quizName}</h2>
-        <div class="questions-container">
-          ${questionsHTML}
-        </div>
-        <button onclick="closePopup()">Close</button>
-      </div>
-    `;
-  
-    document.body.appendChild(popup);*/
+   
   }
   
 

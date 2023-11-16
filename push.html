@@ -6,9 +6,13 @@
     <title>LinkedList Visualization</title>
 
     <link rel="stylesheet" href="./remove.css" />
+    <link rel="stylesheet" href="./buttons.css" />
 
 </head>
 <style>
+    body {
+    background-color: lightblue;
+  }
     /* Style for the side panel */
     .side-panel {
         width: 0;
@@ -37,7 +41,7 @@
 
     /* Style for the button when the panel is open */
     .open-button.active {
-        transform: translateX(-600px);
+        transform: translateX(-500px);
     }
     
     /* Style for the arrow icon when the panel is open */
@@ -50,38 +54,42 @@
         padding: 20px;
         color: white;
     }
-    canvas {
-        border: 1px solid black;
-        background: pink;
-      }
+
+    .top-nav {
+      background-color: rgb(255, 255, 255);
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+    .logo {
+      max-width: 375px;
+      height: 50px;
+      border-radius: 20px;
+      left:0;
+  
+  }
 </style>
 <body>
+    <div class="top-nav">
+        <img class="logo" src="./runtime_logo.jpg"  style ="margin-left: 2%;" alt = "Logo">
+
+        <h2 style="margin-left:35%;">Pushing</h2>
+    </div><br>
     <button class="open-button" onclick="toggleSidePanel()">
         <div class="arrow-icon">&#9660;</div>
     </button>
 
         <div id="canvas-and-controls">
-            <div class="push-container">
-                <label for="pushFrontInput">Front Value:</label>
-                <input type="text" id="pushFrontInput">
-                <button id="pushFrontButton">Push Front</button>
-                <!-- pushBack -->
-                <label for="pushBackInput">Back Value:</label>
-                <input type="text" id="pushBackInput">
-                <button id="pushBackButton">Push Back</button>
-            </div>
-
-            <div class = "canvas-container">
-                <canvas id="linkedListCanvas" width="900" height="550"></canvas>
-            </div>
+            <canvas id="linkedListCanvas" class = "card" width="1000px" height="400"></canvas>
 
             <div class="controls">
-                <button id="popFrontButton">Pop Front</button>
-                <button id="popBackButton">Pop Back</button>
-                <!-- Input field for specifying the index -->
-                <label for="indexInput">Enter Index:</label>
-                <input type="number" id="indexInput" min="0" step="1" value="0">
-                <button id="popButton">Pop Node at Index</button>
+                <label for="pushFrontInput" style="font-family: 'Courier New', Courier, monospace;font-weight: 700;">Front Value:</label>
+                <input type="text" id="pushFrontInput" style="font-family: 'Courier New', Courier; height: 20px;">
+                <button class="button-89" role="button" id="pushFrontButton" style="margin-bottom: 30px;">Push Front</button>
+                <!-- pushBack -->
+                <label for="pushBackInput" style="font-family: 'Courier New', Courier, monospace; font-weight: 700;">Back Value:</label>
+                <input type="text" id="pushBackInput" style="font-family: 'Courier New', Courier; height: 20px;">
+                <button class="button-89" role="button" id="pushBackButton">Push Back</button>
             </div>
         </div>
         
@@ -95,127 +103,125 @@
             </div>
         </div>
         
-
-   
-    <script>
-        function toggleSidePanel() {
-            var sidePanel = document.getElementById("mySidepanel");
-            var openButton = document.querySelector(".open-button");
-    
-            if (sidePanel.style.width === "600px") {
-                sidePanel.style.width = "0";
-                openButton.classList.remove("active");
-            } else {
-                sidePanel.style.width = "600px";
-                openButton.classList.add("active");
-            }
-        }
-
-        // Function to display the "pop_back" code
-        function displayPushBackCode() {
-            const codeContainer = document.querySelector('.pop-code-container');
-            codeContainer.innerHTML = `
-                <pre>
-                    <code class="popBack-line">void LinkedList::push_back(Thing t)</code>
-                    <code class="popBack-line">{</code>
-                    <code class="popBack-line">    if(head->next == nullptr){</code>
-                    <code class="popBack-line">        push_front();</code>
-                    <code class="popBack-line">        return;</code>
-                    <code class="popBack-line">    }</code>
-                    <code class="popBack-line">    Link* tmp = head;</code>
-                    <code class="popBack-line">    while(tmp->next != nullptr){</code>
-                    <code class="popBack-line">        tmp = tmp->next;</code>
-                    <code class="popBack-line">    }</code>
-                    <code class="popBack-line">    tmp->next = new Link(t);</code>
-                    <code class="popBack-line">}</code>
-                </pre>
-            `;
-            explanationBox.innerHTML = '<p><strong>push_back Function:</strong> Adds a Node to the back of the list </p>';
+        <script>
+            function toggleSidePanel() {
+                var sidePanel = document.getElementById("mySidepanel");
+                var openButton = document.querySelector(".open-button");
         
-            codeLines = document.querySelectorAll('.popBack-line');
-            explanationBox = document.getElementById('explanation');
-        }
-        // Function to display the "pop_back" code
-        function displayPushFrontCode() {
-            const codeContainer = document.querySelector('.pop-code-container');
-            codeContainer.innerHTML = `
-                <pre>
-                    <code class="popFront-line">void LinkedList::push_front(Thing t)</code>
-                    <code class="popFront-line">{</code>
-                    <code class="popFront-line">    Link* newHead = new Link(t);</code>
-                    <code class="popFront-line">    newHead->next = head;</code>
-                    <code class="popFront-line">    head = newHead;</code>
-                    <code class="popFront-line">}</code>
-                </pre>
-            `;
-            explanationBox.innerHTML = '<p><strong>push_back Function:</strong> Adds a Node to the back of the list </p>';
-        
-            codeLines = document.querySelectorAll('.popFront-line');
-            explanationBox = document.getElementById('explanation');
-        }
-        // Function to display the "pop_back" code
-        function displayPopBackCode() {
-            const codeContainer = document.querySelector('.pop-code-container');
-            codeContainer.innerHTML = `
-                <pre>
-                    <code class="popBack-line">void LinkedList::pop_back()</code>
-                    <code class="popBack-line">{</code>
-                    <code class="popBack-line">    if(head->next == nullptr){</code>
-                    <code class="popBack-line">        pop_front();</code>
-                    <code class="popBack-line">        return;</code>
-                    <code class="popBack-line">    }</code>
-                    <code class="popBack-line">    Link* tmp = head;</code>
-                    <code class="popBack-line">    while(tmp->next->next != nullptr){</code>
-                    <code class="popBack-line">        tmp = tmp->next;</code>
-                    <code class="popBack-line">    }</code>
-                    <code class="popBack-line">    delete tmp->next;</code>
-                    <code class="popBack-line">    tmp->next = nullptr;</code>
-                    <code class="popBack-line">    // we are done</code>
-                    <code class="popBack-line">}</code>
-                </pre>
-            `;
-            explanationBox.innerHTML = '<p><strong>pop_back Function:</strong> Removes the last node from the linked list if it exists, or calls "pop_front" if the list is empty.</p>';
-        
-            codeLines = document.querySelectorAll('.popBack-line');
-            explanationBox = document.getElementById('explanation');
-        }
-        function displayPopFrontCode() {
-            const codeContainer = document.querySelector('.pop-code-container');
-            codeContainer.innerHTML = `
-                <pre>
-                    <code class="popFront-line">void LinkedList::pop_front()</code>
-                    <code class="popFront-line">{</code>
-                    <code class="popFront-line">    Link* tmp = head;</code>
-                    <code class="popFront-line">    head = head->next;</code>
-                    <code class="popFront-line">    delete tmp;</code>
-                    <code class="popFront-line">}</code>
-                </pre>
-            `;
-            explanationBox.innerHTML = '<p><strong>pop_front Function:</strong> Removes the first node from the linked list.</p>';
-            
-            // Update the codeLines and explanationBox references
-            codeLines = document.querySelectorAll('.popFront-line');
-            explanationBox = document.getElementById('explanation');
-        }
-
-        var codeLines = document.querySelectorAll('.popBack-line');
-        var explanationBox = document.getElementById('explanation');
-
-        function highlightLine(index) {
-            codeLines.forEach((line, i) => {
-                if (i === index) {
-                    line.classList.add('highlight');
+                if (sidePanel.style.width === "490px") {
+                    sidePanel.style.width = "0";
+                    openButton.classList.remove("active");
                 } else {
-                    line.classList.remove('highlight');
+                    sidePanel.style.width = "490px";
+                    openButton.classList.add("active");
                 }
-            });
-        }
-        function showExplanation(index, text) {
-            explanationBox.innerHTML = `<p><strong>Line ${index}:</strong> ${text}</p>`;
-        }
-
-    </script>
-     <script src="./push.js"></script>
+            }
+    
+            // Function to display the "pop_back" code
+            function displayPushBackCode() {
+                const codeContainer = document.querySelector('.pop-code-container');
+                codeContainer.innerHTML = `
+                    <pre>
+                        <code class="popBack-line">void LinkedList::push_back(Thing t)</code>
+                        <code class="popBack-line">{</code>
+                        <code class="popBack-line">    if(head->next == nullptr){</code>
+                        <code class="popBack-line">        push_front();</code>
+                        <code class="popBack-line">        return;</code>
+                        <code class="popBack-line">    }</code>
+                        <code class="popBack-line">    Link* tmp = head;</code>
+                        <code class="popBack-line">    while(tmp->next != nullptr){</code>
+                        <code class="popBack-line">        tmp = tmp->next;</code>
+                        <code class="popBack-line">    }</code>
+                        <code class="popBack-line">    tmp->next = new Link(t);</code>
+                        <code class="popBack-line">}</code>
+                    </pre>
+                `;
+                explanationBox.innerHTML = '<p><strong>push_back Function:</strong> Adds a Node to the back of the list </p>';
+            
+                codeLines = document.querySelectorAll('.popBack-line');
+                explanationBox = document.getElementById('explanation');
+            }
+            // Function to display the "pop_back" code
+            function displayPushFrontCode() {
+                const codeContainer = document.querySelector('.pop-code-container');
+                codeContainer.innerHTML = `
+                    <pre>
+                        <code class="popFront-line">void LinkedList::push_front(Thing t)</code>
+                        <code class="popFront-line">{</code>
+                        <code class="popFront-line">    Link* newHead = new Link(t);</code>
+                        <code class="popFront-line">    newHead->next = head;</code>
+                        <code class="popFront-line">    head = newHead;</code>
+                        <code class="popFront-line">}</code>
+                    </pre>
+                `;
+                explanationBox.innerHTML = '<p><strong>push_back Function:</strong> Adds a Node to the back of the list </p>';
+            
+                codeLines = document.querySelectorAll('.popFront-line');
+                explanationBox = document.getElementById('explanation');
+            }
+            // Function to display the "pop_back" code
+            function displayPopBackCode() {
+                const codeContainer = document.querySelector('.pop-code-container');
+                codeContainer.innerHTML = `
+                    <pre>
+                        <code class="popBack-line">void LinkedList::pop_back()</code>
+                        <code class="popBack-line">{</code>
+                        <code class="popBack-line">    if(head->next == nullptr){</code>
+                        <code class="popBack-line">        pop_front();</code>
+                        <code class="popBack-line">        return;</code>
+                        <code class="popBack-line">    }</code>
+                        <code class="popBack-line">    Link* tmp = head;</code>
+                        <code class="popBack-line">    while(tmp->next->next != nullptr){</code>
+                        <code class="popBack-line">        tmp = tmp->next;</code>
+                        <code class="popBack-line">    }</code>
+                        <code class="popBack-line">    delete tmp->next;</code>
+                        <code class="popBack-line">    tmp->next = nullptr;</code>
+                        <code class="popBack-line">    // we are done</code>
+                        <code class="popBack-line">}</code>
+                    </pre>
+                `;
+                explanationBox.innerHTML = '<p><strong>pop_back Function:</strong> Removes the last node from the linked list if it exists, or calls "pop_front" if the list is empty.</p>';
+            
+                codeLines = document.querySelectorAll('.popBack-line');
+                explanationBox = document.getElementById('explanation');
+            }
+            function displayPopFrontCode() {
+                const codeContainer = document.querySelector('.pop-code-container');
+                codeContainer.innerHTML = `
+                    <pre>
+                        <code class="popFront-line">void LinkedList::pop_front()</code>
+                        <code class="popFront-line">{</code>
+                        <code class="popFront-line">    Link* tmp = head;</code>
+                        <code class="popFront-line">    head = head->next;</code>
+                        <code class="popFront-line">    delete tmp;</code>
+                        <code class="popFront-line">}</code>
+                    </pre>
+                `;
+                explanationBox.innerHTML = '<p><strong>pop_front Function:</strong> Removes the first node from the linked list.</p>';
+                
+                // Update the codeLines and explanationBox references
+                codeLines = document.querySelectorAll('.popFront-line');
+                explanationBox = document.getElementById('explanation');
+            }
+    
+            var codeLines = document.querySelectorAll('.popBack-line');
+            var explanationBox = document.getElementById('explanation');
+    
+            function highlightLine(index) {
+                codeLines.forEach((line, i) => {
+                    if (i === index) {
+                        line.classList.add('highlight');
+                    } else {
+                        line.classList.remove('highlight');
+                    }
+                });
+            }
+            function showExplanation(index, text) {
+                explanationBox.innerHTML = `<p><strong>Line ${index}:</strong> ${text}</p>`;
+            }
+    
+        </script>
+         <script src="./push.js"></script>
 
 </body>
 </html>

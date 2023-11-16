@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Numbered Card</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #ffcccb; /* Set the background color to pink */
+        }
+
+        #card-container {
+            text-align: center;
+            overflow-y: scroll; /* Add scroll to the card */
+        }
+
+        .card {
+            width: 700px; /* Increase the card width */
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 16px;
+        }
+
+        .card-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        #instruction-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #instruction-list li {
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        #instruction-list li:before {
+            content: counter(instructionCounter);
+            counter-increment: instructionCounter;
+            font-weight: bold;
+            margin-right: 6px;
+            display: inline-block;
+            position: absolute;
+            left: -20px; /* Adjust the value to control the distance between the number and the text */
+        }
+
+        #instruction-list li:after {
+            content: '';
+            display: block;
+            height: 2px;
+            width: 100%;
+            background-color: #000; /* You can adjust the color as needed */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="card-container">
+        <div class="card">
+            <div class="card-header">Instructions</div>
+            <ol id="instruction-list">
+                <!-- Your list items go here -->
+                <li>Instruction 1: Use "Add Note" to add a new Node.</li>
+                <li>Instruction 2: Use "Update Link" to create different links.</li>
+                <li>Instruction 3: Use "Generate Questions" to add new Questions</li>
+                <li>Instruction 4: Use "Save Questions" To save and update questions</li>
+                <li>Instruction 5: Use "test Single LinkedList" to test your linkedlist if it matches the tests generated</li>
+                <li>Instruction 6: Use "test Double" to test your linkedlist if it matches the tests generated for Double Linkled list</li>
+                <li>Instruction 7: Use "Memory" tosee which nodes where lost as Memory loss</li>
+                <li>Instruction 8: Use "Delete Node" to remove or delete nodes from the canvas/ Drag the node to the button</li>
+                <li>Instruction 9: Use "Memory" tosee which nodes where lost as Memory loss</li>
+                <li>Instruction 10: The Green Arrow shows that is a next pointer and it can be used in both single and double linked list</li>
+                <li>Instruction 11: The red arrow is a previous link and can be used in Double Linked list to link nodes for a reverse</li>
+                <li>Instruction 12: The Score for Adding and Removing depends on number of Elements you want to add/remove : if you added 2/3 successfully you would score 66.66%</li>
+                <li>Instruction 13: The score for all the push backs if either 100% or 0% in a single linked list</li>
+                <li>Instruction 14: The score for all the push and pops will be either 100%,50% or 0% : you will score 100 if you added or pushed successfully and all links connected else you will get 50% if some links are missing pr get 0% if the node is node added/removed at all</li>
+            </ol>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

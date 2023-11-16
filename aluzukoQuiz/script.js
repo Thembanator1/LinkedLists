@@ -15,7 +15,7 @@ measurementId: "G-PH4QNCPP2J"
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-
+var link="";
 let optionCounter = 2;
 let quizName = '';
 let questionDictionary = {}; // Dictionary to store questions
@@ -29,7 +29,8 @@ saveQuizNameButton.addEventListener('click', saveQuizName);
 addOptionButton.addEventListener('click', addOption);
 addQuestionButton.addEventListener('click', addQuestion);
 submitAnswersButton.addEventListener('click', submitAnswers);
-
+ 
+//var mark=document.getElementById("questionMark");
 function saveQuizName() {
   const quizNameInput = document.getElementById('quizNameInput');
 
@@ -62,19 +63,21 @@ function addQuestion() {
   const questionType = getCurrentQuestionType();
   const questionText = document.getElementById('questionText').value.trim();
   const options = Array.from(document.getElementsByName('option')).map(optionInput => optionInput.value.trim());
-
+  const mark = document.getElementById('questionMark').value;
   const newQuestion = {
     type: questionType,
     text: questionText,
     options: options,
-    image: "https://i.stack.imgur.com/c7qNV.png",
+    mark:mark,
+    image: link,
   };
 
   // Save the question details to the dictionary
   questionDictionary[questionText] = newQuestion;
 
   // Display the added question below the form
-  displayQuestion(newQuestion);
+  
+  displayQuestion(newQuestion, mark);
 
   // Optional: Clear the form after adding a question
   document.getElementById('quizForm').reset();
@@ -88,14 +91,14 @@ function addQuestion() {
           <input type="${getCurrentQuestionType() === 'multiAnswer' ? 'checkbox' : 'radio'}" name="options" disabled>`;
 }
 
-function displayQuestion(question) {
+function displayQuestion(question, mark) {
   console.log(question);
   const questionList = document.getElementById('questionList');
   const questionDiv = document.createElement('div');
   questionDiv.classList.add('question');
 
   // Display the question text
-  questionDiv.innerHTML = `<strong>${question.text}</strong><br>`;
+  questionDiv.innerHTML = `<strong>${question.text}</strong>  (${mark} marks)<br>`;
 
   // Display the image if available
   if (question.image) {
@@ -123,7 +126,7 @@ function getCurrentQuestionType() {
 // Create a reference to the Firebase database
 const database = firebase.database();
 
-function storeQuizInDatabase(quizName, questionDictionary, answers) {
+function storeQuizInDatabase(quizName, questionDictionary, answers, mark) {
   // Create a unique key for the quiz in the "quizzes" node
   const quizKey = database.ref().child('quizzes').push().key;
 
@@ -131,7 +134,8 @@ function storeQuizInDatabase(quizName, questionDictionary, answers) {
   const quizData = {
     quizName: quizName,
     questions: questionDictionary,
-    answers: answers
+    answers: answers,
+    //mark: questionDictionary.mark  // Add the mark to the quiz data
   };
 
   // Use the unique key to store the quiz data in the "quizzes" node
@@ -150,19 +154,50 @@ function submitAnswers() {
 
   const selectedOptions = document.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked');
   const answers = [];
-
+  const mark =0; //document.getElementById('questionMark').value;  // Get the overall quiz mark
+  console.log("myDict : ",questionDictionary);
   selectedOptions.forEach(option => {
+    
     const questionText = option.dataset.question;
     const optionText = option.dataset.option;
     answers.push({ question: questionText, option: optionText });
   });
 
   // Store the quiz details in the database
-  storeQuizInDatabase(quizName, questionDictionary, answers)
+  storeQuizInDatabase(quizName, questionDictionary, answers, mark)
     .then(() => {
+      alert("Quiz Successfully created");
       console.log('Quiz successfully stored in the database.');
     })
     .catch(error => {
       console.error('Error storing quiz in the database:', error);
     });
+}
+const storage = firebase.storage();
+
+document.getElementById('image').addEventListener('change', handleImageUpload);
+
+function handleImageUpload(event) {
+  const file = event.target.files[0];
+  const storageRef = storage.ref('images/' + file.name);
+  const uploadTask = storageRef.put(file);
+
+  uploadTask.on('state_changed',
+    (snapshot) => {
+      // Track the upload progress here if needed
+    },
+    (error) => {
+      // Handle any errors while uploading
+      console.error('Error uploading image:', error);
+    },
+    () => {
+      // Upload successful, get the download URL
+      uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+        // Use the download URL as needed (e.g., save it in the database)
+        console.log('Image uploaded successfully. URL:', downloadURL);
+        link=downloadURL || "";
+        // You can now save this URL to your database or use it as required.
+      });
+    }
+  );
 }

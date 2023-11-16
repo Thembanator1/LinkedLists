@@ -19,9 +19,10 @@
         <option value="multiAnswer">Multi-Answer</option>
         <option value="longQuestion">Long Question</option>
       </select>
-
+      <label for="questionMark">Question Mark:</label>
+      <textarea id="questionMark" name="questionMark" rows="1" placeholder="Enter mark e.g 5"></textarea>
       <label for="questionText">Question Text:</label>
-      <textarea id="questionText" name="questionText" rows="4"></textarea>
+      <textarea id="questionText" name="questionText" rows="4" placeholder="Type your question"></textarea>
 
       <div class="options-container" id="optionsContainer">
         <label>Options:</label>
@@ -29,9 +30,10 @@
           <input type="text" name="option" placeholder="Option 1">
           <input type="checkbox" name="options" disabled>
         </div>
+        <button type="button" id="addOptionButton">Add Option</button>
       </div>
 
-      <button type="button" id="addOptionButton">Add Option</button>
+    
 
       <label for="image">Upload Image (optional):</label>
       <input type="file" id="image" name="image">
@@ -46,5 +48,23 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   <script type="module" src="script.js"></script>
+
+  <script>
+    // Get references to the elements
+const questionTypeSelect = document.getElementById('questionType');
+const optionsContainer = document.getElementById('optionsContainer');
+
+// Add an onchange event listener to the question type select
+questionTypeSelect.addEventListener('change', () => {
+  // Check if the selected question type is 'longAnswer'
+  if (questionTypeSelect.value === 'longQuestion') {
+    // Hide the options container for longAnswer type
+    optionsContainer.style.display = 'none';
+  } else {
+    // Show the options container for other types
+    optionsContainer.style.display = 'block';
+  }
+});
+  </script>
 </body>
 </html>

@@ -28,6 +28,7 @@ class Tests {
         return this.Check;
     }
     testAdd(node){
+        
         this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
         if(this.newNodes.length==this.oldNodes.length){
