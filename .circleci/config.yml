@@ -1,0 +1,12 @@
+orbs:
+  node: circleci/node@5.1.0
+  workflows:
+    example-workflow:
+      jobs:
+        - node/test:
+            run-command: npm test 
+            override-ci-command: yarn install 
+            cache-version: v1 
+            pkg-manager: npm 
+            resource_class: large 
+            test-results-for: other 
