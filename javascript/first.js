@@ -580,6 +580,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("loginButton").addEventListener("click", function () {
         generateQuestions();
     });
+
+    document.getElementById("InstructionsBtn").addEventListener("click", function () {
+        window.location.href = "instructions.html";
+    });
      // Add click event listener to the button
 
     // Function to handle "Add Node" button click
