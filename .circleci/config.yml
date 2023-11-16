@@ -24,7 +24,5 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CWENGA_WAS_HERE}}
-          files:
-            - ./coverage/ # assuming Jest generates coverage in a directory called 'coverage'
-            - ./coverage.xml # assuming PHPUnit generates coverage in a file called 'coverage.xml'
+         
           verbose: true
