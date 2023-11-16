@@ -1,4 +1,4 @@
-name: PHPUnit and Jest Codecov
+name:  Jest Codecov
 
 on:
   push:
