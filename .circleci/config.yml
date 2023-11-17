@@ -106,16 +106,7 @@ jobs:
     - run:
           name: Install Codecov
           command: sudo npm install -g codecov
-
-      # Run tests and generate coverage reports
-    - run:
-          name: Run tests with coverage
-          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
-
-      # Upload coverage reports to Codecov
-    - run:
-          name: Upload coverage reports to Codecov
-          command: codecov -t $CODECOV_TOKEN
+   
     # Add a step to update codecov
     - run:
        name: Update Codecov
@@ -124,9 +115,18 @@ jobs:
     - run:
        name: Create test results directory
        command: mkdir -p /home/circleci/project/test-results
+    
+    - run:
+          name: Run tests with coverage
+          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
 
     - store_test_results:
         path: ./test-results/
+      # Upload coverage reports to Codecov
+    - run:
+          name: Upload coverage reports to Codecov
+          command: codecov -t $CODECOV_TOKEN
+   
     
 
 workflows:
