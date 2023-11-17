@@ -217,4 +217,4 @@ class DoubleTests {
 
 }
 
-module.exports = DoubleTests;
+export default DoubleTests;

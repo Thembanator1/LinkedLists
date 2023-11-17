@@ -147,4 +147,4 @@ class Tests {
 
 }
 
-module.exports = Tests;
+export default Tests;
