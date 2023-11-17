@@ -28,7 +28,7 @@ jobs:
               exit 1
           fi
         name: Checking for package.json
-        working_directory: ~/runtime-terrors
+        working_directory: .
     - run:
         command: |
           TARGET_DIR="/tmp"
