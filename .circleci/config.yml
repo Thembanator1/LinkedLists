@@ -100,15 +100,9 @@ jobs:
         command: npm install jest-junit
     - run:
         name: Run tests
-        command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
+        command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit  && npm run test --collectCoverage=true
     - store_test_results:
         path: ./test-results/
-
-    -run:
-       name: Run coverage
-       command: npm run test --collectCoverage=true
-    -store_artifacts:
-      path: ./coverage
         
 workflows:
   build-and-test:
