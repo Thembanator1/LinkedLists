@@ -7,7 +7,7 @@ jobs:
     resource_class: large
     environment:
     - JEST_JUNIT_OUTPUT_DIR: ./test-results/
-    # - CODECOV_TOKEN: YOUR_CODECOV_TOKEN
+    - CODECOV_TOKEN: 610aed1d-d6ed-470f-81c1-76556649c068
     steps:
     - checkout
     - run:
@@ -126,6 +126,18 @@ workflows:
     jobs:
     - test-node
   version: 2
+  
+  version: '2.1'
+orbs:
+  codecov: codecov/codecov@3.2.5
+  node: circleci/node@4.7.0
+workflows:
+  upload-to-codecov:
+    jobs:
+      - node/test:
+          post-steps:
+            - codecov/upload
+
 
 # Original config.yml file:
 # # This config was automatically generated from your source code
