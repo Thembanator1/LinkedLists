@@ -1,4 +1,4 @@
-const {start, addRandomNode, deleteNode, link, updateLink, drawLine, drawNode} = require("../javascript/first_fun");
+const {start, addRandomNode, deleteNode, link, updateLink, drawLine, drawNode} = require("../Interactive_UI/first_fun");
 
 
 
