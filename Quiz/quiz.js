@@ -82,6 +82,7 @@ function getCorrectAnswers(answers, questionText) {
 }
 
 const questionList = document.getElementById('questionList');
+
 function displayQuestion(question) {
   const questionDiv = document.createElement('div');
   questionDiv.classList.add('question');
@@ -103,8 +104,7 @@ function displayQuestion(question) {
       // Create the option input with checked and disabled attributes if it's correct
       questionDiv.innerHTML += `<div class="option-input">
         <input type="${question.type === 'multiAnswer' ? 'checkbox' : 'radio'}" 
-               name="options" 
-               data-question="${question.text}" 
+               name="${question.text}" 
                data-option="${option}" 
                ${isChecked ? 'checked' : ''} 
                disabled>
@@ -114,8 +114,77 @@ function displayQuestion(question) {
     questionDiv.innerHTML += '</div>';
   }
 
+  // Add click event listener to the question
+  questionDiv.addEventListener('click', () => enableRadioButtons(questionDiv));
+
   questionList.appendChild(questionDiv);
 }
+// Function to update answers in the quizzes database
+function updateDatabase(questionText, selectedOptions) {
+  const quizRef = firebase.database().ref('quizzes');
+
+  // Fetch the current quizzes data
+  quizRef.once('value', (snapshot) => {
+    const quizzes = snapshot.val();
+
+    // Check if quizzes exist
+    if (quizzes) {
+      // Iterate through each quiz in the database
+      Object.keys(quizzes).forEach((quizKey) => {
+        const quiz = quizzes[quizKey];
+
+        // Check if the current quiz has the question we're updating
+        if (quiz.questions && quiz.questions.hasOwnProperty(questionText)) {
+          // Log for debugging
+          console.log(`Updating answers for quiz: ${quiz.quizName}, question: ${questionText}`);
+
+          // Update the correct answers for the question
+          quizRef.child(quizKey).child('questions').child(questionText).child('correctAnswers').set(selectedOptions)
+            .then(() => {
+              console.log(`Successfully updated answers for question: ${questionText}`);
+            })
+            .catch((error) => {
+              console.error('Error updating answers:', error);
+            });
+        }
+      });
+    } else {
+      console.error('No quizzes found in the database.');
+    }
+  });
+}
+
+function enableRadioButtons(questionDiv) {
+  // Disable all radio buttons and checkboxes
+  const allInputs = questionList.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+  allInputs.forEach((input) => {
+    input.disabled = true;
+  });
+
+  // Enable radio buttons or checkboxes for the clicked question
+  const clickedInputs = questionDiv.querySelectorAll('input[type="radio"], input[type="checkbox"]');
+  clickedInputs.forEach((input) => {
+    input.disabled = false;
+  });
+
+  // Print the question text on the console
+  const questionText = questionDiv.querySelector('strong').textContent;
+  console.log('Clicked Question:', questionText);
+
+  // Observe checked radio buttons or checkboxes
+  questionDiv.addEventListener('change', () => {
+    const checkedInputs = questionDiv.querySelectorAll('input:checked');
+    console.log('Checked Options:', Array.from(checkedInputs).map(input => input.getAttribute('data-option')));
+    updateDatabase(questionText,Array.from(checkedInputs).map(input => input.getAttribute('data-option')));
+  });
+
+ 
+}
+
+// Rest of your existing code...
+
+
+// Rest of your existing code...
 
 function getCurrentQuestionType() {
   return document.getElementById('questionType').value;
