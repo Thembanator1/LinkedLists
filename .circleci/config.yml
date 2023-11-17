@@ -7,6 +7,7 @@ jobs:
     resource_class: large
     environment:
     - JEST_JUNIT_OUTPUT_DIR: ./test-results/
+    # - CODECOV_TOKEN: YOUR_CODECOV_TOKEN
     steps:
     - checkout
     - run:
@@ -102,10 +103,19 @@ jobs:
     - run:
         name: Run tests
         command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
-    - run:
-          name: Run tests with coverage
-          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
-    
+    # - run:
+    #       name: Install Codecov
+    #       command: npm install -g codecov
+
+    #   # Run tests and generate coverage reports
+    # - run:
+    #       name: Run tests with coverage
+    #       command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
+
+    #   # Upload coverage reports to Codecov
+    # - run:
+    #       name: Upload coverage reports to Codecov
+    #       command: codecov -t $CODECOV_TOKEN
 
     - store_test_results:
         path: ./test-results/
