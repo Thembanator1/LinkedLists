@@ -126,8 +126,6 @@ workflows:
     jobs:
     - test-node
   version: 2
-  
-  version: '2.1'
 orbs:
   codecov: codecov/codecov@3.2.5
   node: circleci/node@4.7.0
