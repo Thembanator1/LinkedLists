@@ -31,7 +31,7 @@ Nonhlanhla Zwane
 
 **Acknowledgments:**
 
-Special thanks to the client for the project idea and collaboration.
+Special thanks to the client for the project idea and collaboration. Check out Wiki for more info.
 Thanks to all contributors and open-source projects that helped inspire this educational tool.
 Happy learning! 📚
 
