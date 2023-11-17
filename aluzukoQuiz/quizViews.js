@@ -186,7 +186,7 @@ const studentNumber = localStorage.getItem('myKey');
   document.getElementById('submitQuiz').addEventListener('click', () => {
     submitQuiz();
    // gradeQuiz(); // Call the gradeQuiz function after submitting the quiz
-    alert(globalMark);
+   // alert(globalMark);
   });
   
  // Function to submit the quiz and disable input elements
@@ -216,7 +216,7 @@ function submitQuiz() {
     });
     gradeQuiz(); // Call the gradeQuiz function after submitting the quiz
     // Get the student number from local storage
-    const studentNumber ="2456615"; //localStorage.getItem('myKey');
+    const studentNumber =localStorage.getItem('myKey');
     //globalMark=totalMarks;
     // Insert quiz details into the student database
     insertQuizDetailsToDatabase(allQuestions, studentResponses, studentNumber);
@@ -261,7 +261,7 @@ function submitQuiz() {
   
     // Display total marks
      globalMark=totalMarks;
-     alert(globalMark);
+    // alert(globalMark);
     alert(`Your total marks: ${totalMarks}`);
   }
   
@@ -270,7 +270,7 @@ function submitQuiz() {
     // You need to implement your own logic for checking long answer responses
     // For example, you can compare studentResponse with correctAnswers
     // Return true if correct, false otherwise
-    return true; // Placeholder, replace with your implementation
+    return false; // Placeholder, replace with your implementation
   }
   
   // Function to check multiple-choice answer
