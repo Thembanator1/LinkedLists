@@ -121,6 +121,9 @@ jobs:
        name: Update Codecov
        command: sudo npm install -g codecov@latest
 
+    - run:
+       name: Create test results directory
+       command: mkdir -p /home/circleci/project/test-results
 
     - store_test_results:
         path: ./test-results/
