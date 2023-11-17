@@ -1,4 +1,4 @@
-const DoubleTests = require("../Interactive_UI/second");
+const DoubleTests = require("../Interactive_UI/double_fun");
 
 
 
