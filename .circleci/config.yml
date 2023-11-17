@@ -118,7 +118,7 @@ jobs:
     
     - run:
           name: Run tests with coverage
-          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
+          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit --coverage-clover coverage.xml .
 
     - store_test_results:
         path: ./test-results/
