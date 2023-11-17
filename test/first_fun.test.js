@@ -1,4 +1,4 @@
-const {start, addRandomNode, deleteNode, link, updateLink} = require("../Interactive_UI/first_fun");
+const {start, addRandomNode, deleteNode, link, updateLink, drawLine, drawNode} = require("../Interactive_UI/first_fun");
 
 
 
@@ -205,7 +205,7 @@ describe('addRandomNode function tests', () => {
 });
   
 
-    
+
 
 
 
