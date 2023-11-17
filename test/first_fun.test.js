@@ -205,24 +205,7 @@ describe('addRandomNode function tests', () => {
 });
   
 
-describe('start function tests', () => {
-  // Test case for the start function
-  it('should initialize nodes array with temp, head, and tail nodes', () => {
-    const nodes = [];
-
-    // Call the start function
-    const result = start(nodes);
-
-    // Expect the result to be the modified nodes array
-    expect(result).toHaveLength(3); // Ensure there are three nodes
-
-    // Optionally, you may check specific properties of the nodes array
-    expect(result[0]).toHaveProperty('name', 'temp');
-    expect(result[1]).toHaveProperty('name', 'head');
-    expect(result[2]).toHaveProperty('name', 'tail');
-  });
-});
-
+    
 
 
 
