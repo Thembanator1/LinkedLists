@@ -19,12 +19,12 @@ If you have any questions or need further information, please feel free to conta
 **Backend and Testing:**<br>
 Cwenga Gcolotela<br>
 Kholofelo Lekala<br>
-Thembalami Msimango
+ALuzuko Mlomo
 
 **Frontend:**<br>
 Nonhlanhla Zwane<br>
 Lebohang Tseki<br>
-ALuzuko Mlomo
+Thembalami Msimango
 
 **Scrum Master:**
 Nonhlanhla Zwane
