@@ -115,7 +115,7 @@ jobs:
     #   # Upload coverage reports to Codecov
     # - run:
     #       name: Upload coverage reports to Codecov
-    #       command: codecov -t $CODECOV_TOKEN
+          command: codecov -t $CODECOV_TOKEN
 
     - store_test_results:
         path: ./test-results/
@@ -126,15 +126,6 @@ workflows:
     jobs:
     - test-node
   version: 2
-orbs:
-  codecov: codecov/codecov@3.2.5
-  node: circleci/node@4.7.0
-workflows:
-  upload-to-codecov:
-    jobs:
-      - node/test:
-          post-steps:
-            - codecov/upload
 
 
 # Original config.yml file:
