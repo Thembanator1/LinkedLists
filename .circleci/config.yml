@@ -110,7 +110,7 @@ workflows:
     jobs:
     - runtime-terror-tester
 
-  # version: 2
+ version: 2
   
 
 # Original config.yml file:
