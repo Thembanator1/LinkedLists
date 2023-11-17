@@ -105,7 +105,7 @@ jobs:
         command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
     - run:
           name: Install Codecov
-          command: npm install -g codecov
+          command: sudo npm install -g codecov
 
     #   # Run tests and generate coverage reports
     # - run:
