@@ -1,7 +1,7 @@
 # Orb 'circleci/node@5' resolved to 'circleci/node@5.1.0'
 version: 2
 jobs:
-  runtime-terror-tester:
+  test-node:
     docker:
     - image: cimg/node:lts
     resource_class: large
@@ -103,15 +103,11 @@ jobs:
         command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
     - store_test_results:
         path: ./test-results/
-
-        
 workflows:
   build-and-test:
     jobs:
-    - runtime-terror-tester
-
- version: 2
-  
+    - test-node
+  version: 2
 
 # Original config.yml file:
 # # This config was automatically generated from your source code
