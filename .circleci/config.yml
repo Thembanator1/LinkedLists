@@ -107,7 +107,7 @@ workflows:
   build-and-test:
     jobs:
     - runtime-terror-tester
-  version: 2
+  # version: 2
   
 
 # Original config.yml file:
