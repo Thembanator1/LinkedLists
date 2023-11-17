@@ -34,3 +34,5 @@ Nonhlanhla Zwane
 Special thanks to the client for the project idea and collaboration.
 Thanks to all contributors and open-source projects that helped inspire this educational tool.
 Happy learning! 📚
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/AbutiTseki/runtime-terrors/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/AbutiTseki/runtime-terrors/tree/main)
