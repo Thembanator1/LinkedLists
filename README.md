@@ -6,9 +6,9 @@ This repository contains the source code for an educational tool designed to ass
 
 **Linked List Visualization:** A graphical user interface (GUI) for visualizing and interacting with linked lists, making it easier for students to grasp the concept.
 
-**Problem Generation:** The system can generate a variety of linked list-related problems on the fly, along with their solutions, to help students practice and learn.
+**Problem Generation:** The system allows instructors to generate a variety of linked list-related problems, along with their solutions, to help students practice and learn.
 
-**Algorithm Testing:** Students can test their understanding of various linked list algorithms and operations, such as insertion, deletion, traversal, and more.
+**Algorithm Testing:** Students can test their understanding of various linked list algorithms and operations, such as insertion, deletion, and more.
 
 **User-Friendly Interface:** The tool offers an intuitive and user-friendly interface that students can use for self-study and practice.
 
