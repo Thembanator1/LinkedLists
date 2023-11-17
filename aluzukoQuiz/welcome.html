@@ -50,13 +50,80 @@
     .button.lecturer {
       background-color: inherit;
     }
+    /* Add this to your CSS */
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  z-index: 1;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>Welcome to the Linked Lists Visualization</h1>
-    <a href="./student.html" class="button student">Student</a>
+    <h1>Welcome to the Quiz Platform</h1>
+    <!-- Add this to the body section of your HTML file -->
+<div id="studentPopup" class="popup" style="display: none;">
+  <div class="popup-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+    <label for="studentNumber">Enter Student Number:</label>
+    <input type="text" id="studentNumber" placeholder="e.g., 2456615">
+    <button onclick="saveStudentNumber()">Save</button>
+  </div>
+</div>
+
+    <a href="#" class="button student" onclick="openPopup()"  id="student">Student</a>
     <a href="./lecturerdashboard.html" class="button lecturer">Lecturer</a>
   </div>
+  <!-- Add this script to your HTML file -->
+<script>
+ // Add this to your JavaScript
+function openPopup() {
+  const popup = document.getElementById('studentPopup');
+  popup.style.display = 'block';
+}
+
+function closePopup() {
+  const popup = document.getElementById('studentPopup');
+  popup.style.display = 'none';
+}
+
+function saveStudentNumber() {
+  const studentNumberInput = document.getElementById('studentNumber');
+  const studentNumber = studentNumberInput.value.trim();
+
+  if (studentNumber !== '') {
+    localStorage.setItem('myKey', studentNumber);
+    //alert(`Student number ${studentNumber} saved successfully!`);
+    window.location.assign("./student.html");
+    closePopup();
+  } else {
+    alert('Please enter a valid student number.');
+  }
+}
+
+// Open the popup when the page loads (you can call openPopup() when needed)
+//document.addEventListener('DOMContentLoaded', openPopup);
+
+</script>
+
 </body>
 </html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Platform</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: rgb(223, 199, 157);
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: rgb(88, 65, 29);
+      font-family: italic;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 15px 30px;
+      font-size: 18px;
+      text-align: center;
+      text-decoration: none;
+      color: rgb(126, 99, 58);
+      background-color: inherit;
+      border: 1px solid rgb(126, 99, 58);
+      border-radius: 20px;
+      margin: 10px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+  border: 1px solid #73BEC8;
+  cursor: pointer;
+  color: #73BEC8;
+}
+
+    .button.student {
+      background-color: inherit;
+    }
+
+    .button.lecturer {
+      background-color: inherit;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome to the Quiz Platform</h1>
+    <a href="#" id="student" class="button student">Student</a>
+    <a href="#" id="lecturer" class="button lecturer">Lecturer</a>
+  </div>
+  <a href="#" id="student" class="button student">Student</a>
+  <a href="#" id="lecturer" class="button lecturer">Lecturer</a>
+  
+  <script>
+    document.getElementById("student").addEventListener("click", function() {
+      window.location.href = "./aluzukoQuiz/student.html";
+    });
+  
+    document.getElementById("lecturer").addEventListener("click", function() {
+      window.location.href = "./aluzukoQuiz/lecturerdashboard.html";
+    });
+  </script>
+  
+</body>
+</html>

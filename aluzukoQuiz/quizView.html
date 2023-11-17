@@ -17,9 +17,14 @@
   </div>
 
   <button id="submitQuiz">Submit Quiz</button>
+  <button id="exitQuiz" onclick="ext()">Exit Quiz</button>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   <script type="module" src="quizViews.js"></script>
-
+<script>
+  function ext(){
+    window.location.href="student.html";
+  }
+</script>
 </body>
 </html>
