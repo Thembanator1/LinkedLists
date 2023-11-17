@@ -98,11 +98,19 @@ jobs:
         when: on_fail
     - run:
         command: npm install jest-junit
+
     - run:
         name: Run tests
         command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
+    - run:
+          name: Run tests with coverage
+          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit
+    
+
     - store_test_results:
         path: ./test-results/
+    
+
 workflows:
   build-and-test:
     jobs:
