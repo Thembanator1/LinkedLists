@@ -10,5 +10,11 @@
   "license": "MIT",
   "devDependencies": {
     "jest": "^29.7.0"
+  },
+  "jest": {
+    "coverageDirectory": "custom-coverage-directory",
+    "collectCoverage": true,
+    "coverageReporters": ["html", "lcov", "text-summary"]
   }
+  
 }
