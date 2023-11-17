@@ -5,7 +5,7 @@ class DoubleTests {
         this.Check = "false"; // Move this line to the constructor
     }
     
-
+    ///Function to test is changes where made on the nodes
     testNochange() {
 
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -28,6 +28,7 @@ class DoubleTests {
 
         return this.Check;
     }
+    //Function to check if node has been added to the linkedlist
     testAdd(node){
         this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -61,7 +62,7 @@ class DoubleTests {
         }
         return this.add;
     }
-
+    ////function to check if node has been added to the front of the linkedlist
     testAddFront(node){
         this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -91,7 +92,7 @@ class DoubleTests {
         }
         return this.add;
     }
-
+    ////Function to check if the node has been removed from the linkedlist
     testRemove(node){
         this.add = "true";
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -109,7 +110,7 @@ class DoubleTests {
         return this.add;
 
     }
-
+    /////Function to check if pop back has been done correctly
     testRemoveBack(node){
         this.add = "true";
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -142,7 +143,7 @@ class DoubleTests {
         return this.add;
 
     }
-
+     /////Function to check if pop front has been done correclty
     testRemoveFront(node){
 
         this.add = "true";
@@ -176,6 +177,7 @@ class DoubleTests {
         return this.add;
 
     }
+    ///Function to check if push front has been done correctly
    testAddBack(node){
     this.add = "false";
         var sourceNode = this.newNodes.find(node => node.name === "head");
@@ -216,5 +218,5 @@ class DoubleTests {
     
 
 }
-
+//Here we export the class to be used as an object
 export default DoubleTests;
