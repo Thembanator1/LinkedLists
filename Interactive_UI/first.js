@@ -63,9 +63,9 @@ canvas.addEventListener("mousemove", function (e) {
 
 
 
-
+////Initial function to be run at the biginning
 function start(){
-
+    //We here initialise all the initial nodes 
     const temp = { x: 100, y: canvas.height - 100, name: "temp", next: null, prev: null };
     nodes.push(temp);
 
@@ -82,6 +82,7 @@ function start(){
     traversal();
 }
 
+//function to add a new node the user inputs on the screen
 function addRandomNode() {
     const nodeName = document.getElementById("nodeName").value;
 
@@ -101,7 +102,7 @@ function addRandomNode() {
     traversal();
 }
 
-
+//Function to remove the node the user choses to delete
 function deleteNode() {
     if (selectedNode) {
         // Remove the selected node and associated links
@@ -123,7 +124,7 @@ function deleteNode() {
 
 
 
-
+///This is the function that links the nodes the user choses to link
 function link(node, nodeName){
     var link;
 
@@ -143,6 +144,7 @@ function link(node, nodeName){
     return link;
 }
 
+///Function that can either create or delete a node
 function updateLink() {
     const sourceNodeName = document.getElementById("sourceNode").value;
     const nextNodeName = document.getElementById("nextNode").value;
@@ -179,7 +181,7 @@ function updateLink() {
 
 
 
-
+//Function that will be used to then draw the line and arrow that links different nodes
 function drawLine(colour, sourceNode, targetNode){
     if (sourceNode && targetNode) {
         // Calculate the angle between source and target nodes
@@ -208,6 +210,7 @@ function drawLine(colour, sourceNode, targetNode){
     }
 }
 
+//Function that depicts the colours of the node on click and move
 function drawNode(sourceNode){
     
     ctx.beginPath();           
@@ -248,7 +251,7 @@ function draw() {
 
 
 
-
+//Function used to traverse the nodes 
 function travLink(start){
 
     var sourceNode = nodes.find(node => node.name === start);
@@ -278,6 +281,7 @@ function travNode(start){
     }
 }
 
+//Function to draw the traversal links
 function traversal() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -295,7 +299,7 @@ function traversal() {
 
 
 
-
+//Main function used to create object and run tests depending on which test the user choses to test
 function test(testType){
 
    var lastTest = [].concat(nodes);   
@@ -658,12 +662,12 @@ function generateQuestions() {
 
   
 }
-
+//Function to switch on and off the Questions card-card 
 function ToggleOn() {
     var loginCard = document.getElementById('loginCard');
     loginCard.style.display = (loginCard.style.display === 'none' || loginCard.style.display === '') ? 'block' : 'none';
 }
-
+//function to switch on and off the score card
 function toggleScoreCard() {
     const scoreCard = document.getElementById('scoreCard');
     const overlay = document.getElementById('overlay');

@@ -24,7 +24,7 @@
     input {
         margin-bottom: 10px;
     }
-
+    
     /* Updated button styles */
     input[type="button"] {
         font-size: 16px;
@@ -122,6 +122,19 @@
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
+    .form-group {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+        }
+
+        .form-group input {
+            padding: 5px;
+        }
 
     </style>
     
@@ -173,9 +186,20 @@
         
         
         <input type="button" value="Update Link" id="updateLinkBtn">
-        <input type="text" id="sourceNode" placeholder="Source Node">
-        <input type="text" id="nextNode" placeholder="Next Node (or enter null)">
-        <input type="text" id="prevNode" placeholder="Prev Node (or enter null)">
+        <div class="form-group">
+          <label for="sourceNode">Main Node:</label>
+          <input type="text" id="sourceNode" placeholder="Source Node">
+      </div>
+  
+      <div class="form-group">
+          <label for="nextNode">Next Node:</label>
+          <input type="text" id="nextNode" placeholder="Next Node (or enter null)">
+      </div>
+  
+      <div class="form-group">
+          <label for="prevNode">Previous Node:</label>
+          <input type="text" id="prevNode" placeholder="Prev Node (or enter null)">
+      </div>
 
         <input type="button" value="Generate Questions" id="toggleButton">
         <input type="button" value="Save Questions" id="loginButton">
@@ -202,6 +226,6 @@
 >
 
     <!-- Include the external JavaScript file -->
-    <script type="module" src="first.js"></script>
+    <script type="module" src="./first.js"></script>
 </body>
 </html>

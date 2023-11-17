@@ -63,9 +63,9 @@ body {
     padding: 10px 20px;
     font-size: 16px;
     color: rgb(126, 99, 58);
-      background-color: inherit;
-      border: 1px solid rgb(126, 99, 58);
-      border-radius: 20px;
+    background-color: inherit;
+    border: 1px solid rgb(126, 99, 58);
+    border-radius: 20px;
     cursor: pointer;
   }
 

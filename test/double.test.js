@@ -1,4 +1,4 @@
-const DoubleTests = require("../javascript/second");
+const DoubleTests = require("../Interactive_UI/second");
 
 
 
