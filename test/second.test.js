@@ -1,4 +1,4 @@
-const Tests = require("../javascript/second");
+const Tests = require("../Interactive_UI/second");
 
 
 

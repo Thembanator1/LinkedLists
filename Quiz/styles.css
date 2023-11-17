@@ -11,8 +11,14 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 110vh;
   
+}
+.header {
+  background-color: rgb(223, 199, 157);
+  color: #fff;
+  padding: 20px;
+  text-align: center;
 }
 
 form {
@@ -69,14 +75,16 @@ button:hover {
 
 .question {
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid rgb(126, 99, 58);
   border-radius: 8px;
   overflow: hidden;
   text-align: left;
-  background-color: #e1f5fe;
+  background-color: inherit;
+  color: rgb(126, 99, 58);
   padding: 20px;
   box-sizing: border-box;
 }
+
 
 .options-container {
   display: flex;
