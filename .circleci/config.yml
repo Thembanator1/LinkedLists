@@ -119,7 +119,7 @@ jobs:
     # Add a step to update codecov
     - run:
        name: Update Codecov
-       command: npm install -g codecov@latest
+       command: sudo npm install -g codecov@latest
 
 
     - store_test_results:
