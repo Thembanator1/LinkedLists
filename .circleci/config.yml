@@ -116,6 +116,11 @@ jobs:
     - run:
           name: Upload coverage reports to Codecov
           command: codecov -t $CODECOV_TOKEN
+    # Add a step to update codecov
+    - run:
+       name: Update Codecov
+       command: npm install -g codecov@latest
+
 
     - store_test_results:
         path: ./test-results/
