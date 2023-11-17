@@ -1,33 +1,191 @@
-# version: 2
+# Orb 'circleci/node@5' resolved to 'circleci/node@5.1.0'
+version: 2
+jobs:
+  test-node:
+    docker:
+    - image: cimg/node:lts
+    resource_class: large
+    environment:
+    - JEST_JUNIT_OUTPUT_DIR: ./test-results/
+    - CODECOV_TOKEN: 610aed1d-d6ed-470f-81c1-76556649c068
+    steps:
+    - checkout
+    - run:
+        command: |-
+          # Fail if package.json does not exist in working directory
+
+          if [ ! -f "package.json" ]; then
+              echo
+              echo "---"
+              echo "Unable to find your package.json file. Did you forget to set the app-dir parameter?"
+              echo "---"
+              echo
+              echo "Current directory: $(pwd)"
+              echo
+              echo
+              echo "List directory: "
+              echo
+              ls
+              exit 1
+          fi
+        name: Checking for package.json
+        working_directory: .
+    - run:
+        command: |
+          TARGET_DIR="/tmp"
+          if [ -n "$HOMEDRIVE" ]; then
+              TARGET_DIR="$HOMEDRIVE\\tmp"
+          fi
+
+          # Link corresponding lock file to a temporary file used by cache commands
+          if [ -f "package-lock.json" ]; then
+              echo "Found package-lock.json file, assuming lockfile"
+              cp package-lock.json $TARGET_DIR/node-project-lockfile
+          elif [ -f "npm-shrinkwrap.json" ]; then
+              echo "Found npm-shrinkwrap.json file, assuming lockfile"
+              cp npm-shrinkwrap.json $TARGET_DIR/node-project-lockfile
+          elif [ -f "yarn.lock" ]; then
+              echo "Found yarn.lock file, assuming lockfile"
+              cp yarn.lock $TARGET_DIR/node-project-lockfile
+          fi
+
+          cp package.json $TARGET_DIR/node-project-package.json
+        name: Determine lockfile
+        working_directory: .
+    - restore_cache:
+        keys:
+        - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-lockfile" }}
+        - node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-package.json" }}
+        - node-deps-{{ arch }}-v1-{{ .Branch }}-
+    - run:
+        command: |-
+          # Configure npm cache path if provided
+          if [[ -n "$PARAM_CACHE_PATH" ]]; then
+              npm config set cache "$PARAM_CACHE_PATH"
+          fi
+
+          # Run override ci command if provided, otherwise run default npm install
+          if [[ -n "$PARAM_OVERRIDE_COMMAND" ]]; then
+              echo "Running override package installation command:"
+              eval "$PARAM_OVERRIDE_COMMAND"
+          else
+              npm ci
+          fi
+        environment:
+          PARAM_CACHE_PATH: ''
+          PARAM_OVERRIDE_COMMAND: ''
+        name: Installing NPM packages
+        working_directory: .
+    - save_cache:
+        key: node-deps-{{ arch }}-v1-{{ .Branch }}-{{ checksum "/tmp/node-project-lockfile" }}
+        paths:
+        - ~/.npm
+    - run:
+        command: rm -f /tmp/node-project-lockfile /tmp/node-project-package.json /tmp/yarn-zero-lockfile
+        name: Remove temporary links
+    - run:
+        name: Print node install help instructions
+        command: |-
+          echo "One cause for node package install failure is if you have private repositories that it can't reach
+          One way to fix this for private npm packages:
+            1. Use the npm CLI's \"login\" command to create a token (usually saved in your user's \"~/.npmrc\" file)
+              For more info, see https://circleci.com/blog/publishing-npm-packages-using-circleci-2-0/#:~:text=set%20the%20%24npm_token%20environment%20variable%20in%20circleci
+            2. Add a NPM_TOKEN to an org context
+              For info on how to use contexts, see https://circleci.com/docs/contexts/
+            3. Add a .circleci/config.yml to your repository or use this config.yml as a starting template
+            4. Configure the jobs to use the context that includes NPM_TOKEN
+            5. Add a step to inject your NPM_TOKEN environment variable into npm before \"install-packages\"
+              For an example, see https://circleci.com/blog/publishing-npm-packages-using-circleci-2-0/#:~:text=the%20deploy%20job%20has%20several%20steps%20that%20run%20to%20authenticate%20with%20and%20publish%20to"
+        when: on_fail
+    - run:
+        command: npm install jest-junit
+
+    - run:
+        name: Run tests
+        command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
+    - run:
+          name: Install Codecov
+          command: sudo npm install -g codecov
+   
+    # Add a step to update codecov
+    - run:
+       name: Update Codecov
+       command: sudo npm install -g codecov@latest
+
+    - run:
+       name: Create test results directory
+       command: mkdir -p /home/circleci/project/test-results
+    
+    - run:
+          name: Run tests with coverage
+          command: npm run test --ci --runInBand --coverage --reporters=default --reporters=jest-junit --coverage-clover coverage.xml .
+
+    - store_test_results:
+        path: ./test-results/
+      # Upload coverage reports to Codecov
+    - run:
+          name: Upload coverage reports to Codecov
+          command: codecov -t $CODECOV_TOKEN
+   
+    
+
+workflows:
+  build-and-test:
+    jobs:
+    - test-node
+  version: 2
+
+
+# Original config.yml file:
+# # This config was automatically generated from your source code
+# # Stacks detected: deps:node:.,test:jest:
+# version: 2.1
+# orbs:
+#   node: circleci/node@5
 # jobs:
-#   build:
-#     docker:
-#       - image: circleci/node:10.16.0
-
-#     working_directory: ~/runtime-terrors
-
+#   test-node:
+#     # Install node dependencies and run tests
+#     executor: node/default
+#     environment:
+#       JEST_JUNIT_OUTPUT_DIR: ./test-results/
 #     steps:
 #       - checkout
-
-#       # Download and cache dependencies
-#       - restore_cache:
-#           keys:
-#           - v1-dependencies-{{ checksum "package.json" }}
-#           # fallback to using the latest cache if no exact match is found
-#           - v1-dependencies
-
-#       - run: npm install   && npm install --save-dev jest
-
-
-#       - save_cache:
-#           paths:
-#             - node_modules
-#           key: v1-dependencies-{{ checksum "package.json" }}
-
+#       - node/install-packages:
+#           pkg-manager: npm
 #       - run:
-#           name: "Run Jest and Collect Coverage Reports"
-#           command: npm test --coverage
-#       - store_artifacts:
-#           path: coverage
-
-
+#           name: Print node install help instructions
+#           command: |-
+#             echo \"One cause for node package install failure is if you have private repositories that it can't reach
+#             One way to fix this for private npm packages:
+#               1. Use the npm CLI's \\\"login\\\" command to create a token (usually saved in your user's \\\"~/.npmrc\\\" file)
+#                 For more info, see https://circleci.com/blog/publishing-npm-packages-using-circleci-2-0/#:~:text=set%20the%20%24npm_token%20environment%20variable%20in%20circleci
+#               2. Add a NPM_TOKEN to an org context
+#                 For info on how to use contexts, see https://circleci.com/docs/contexts/
+#               3. Add a .circleci/config.yml to your repository or use this config.yml as a starting template
+#               4. Configure the jobs to use the context that includes NPM_TOKEN
+#               5. Add a step to inject your NPM_TOKEN environment variable into npm before \\\"install-packages\\\"
+#                 For an example, see https://circleci.com/blog/publishing-npm-packages-using-circleci-2-0/#:~:text=the%20deploy%20job%20has%20several%20steps%20that%20run%20to%20authenticate%20with%20and%20publish%20to\"
+#           when: on_fail
+#       - run:
+#           command: npm install jest-junit
+#       - run:
+#           name: Run tests
+#           command: npm run test --ci --runInBand --reporters=default --reporters=jest-junit
+#       - store_test_results:
+#           path: ./test-results/
+#   deploy:
+#     # This is an example deploy job, not actually used by the workflow
+#     docker:
+#       - image: cimg/base:stable
+#     steps:
+#       # Replace this with steps to deploy to users
+#       - run:
+#           name: deploy
+#           command: '#e.g. ./deploy.sh'
+# workflows:
+#   build-and-test:
+#     jobs:
+#       - test-node
+#     # - deploy:
+#     #     requires:
+#     #       - test-node
