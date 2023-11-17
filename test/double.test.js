@@ -222,7 +222,7 @@ describe('Tests', () => {
             const testInstance = new DoubleTests(nodes, nodes);
             const result = testInstance.testRemove('missingNode');
 
-            expect(result).toBe("true");
+            expect(result).toBe("false");
         });
 
         it('should return false when the node is not successfully removed', () => {
