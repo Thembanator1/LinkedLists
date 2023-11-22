@@ -14,7 +14,13 @@
   "jest": {
     "coverageDirectory": "custom-coverage-directory",
     "collectCoverage": true,
-    "coverageReporters": ["html", "lcov", "text-summary"]
+    "coverageReporters": [
+      "html",
+      "lcov",
+      "text-summary"
+    ]
+  },
+  "dependencies": {
+    "mongodb": "^6.3.0"
   }
-  
 }
